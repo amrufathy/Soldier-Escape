@@ -403,7 +403,7 @@ function update() {
 			score += 2 * treeReleaseInterval;
 			scoreText.innerHTML = score.toString();
 		} else {
-			// gameOver();
+			gameOver();
 		}
 	}
 	doTreeLogic();
@@ -424,7 +424,7 @@ function doTreeLogic() {
 			treesToRemove.push(oneTree);
 		} else {
 			//check collision
-			if (treePos.distanceTo(heroSphere.position) <= 0.3) {
+			if (treePos.distanceTo(heroSphere.position) <= 0.6) {
 				console.log("hit");
 				hasCollided = true;
 				explode();
@@ -471,7 +471,7 @@ function explode() {
 }
 
 function render() {
-	renderer.render(scene, camera);//draw
+	renderer.render(scene, camera);
 }
 
 function gameOver() {
@@ -488,7 +488,7 @@ function gameOver() {
 	gameOver.style.textAlign = 'center';
 	gameOver.style.display = 'table';
 	scoreText.innerHTML = "0";
-	gameOver.innerHTML = "<p style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large; vertical-align: middle; display: table-cell;'> GAME OVER MUTHA FUCKA </p>";
+	gameOver.innerHTML = "<p style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large; vertical-align: middle; display: table-cell;'> GAME OVER BRUH </p>";
 	document.body.appendChild(gameOver);
 
 	cancelAnimationFrame(globalRenderID);
