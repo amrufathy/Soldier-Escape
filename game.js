@@ -62,12 +62,14 @@ function createScene() {
 	// Set width and height of the canvas
 	sceneWidth = window.innerWidth;
 	sceneHeight = window.innerHeight;
-	scene = new THREE.Scene();//the 3d scene
+	scene = new THREE.Scene(); //the 3d scene
 	scene.fog = new THREE.FogExp2(0xf0fff0, 0.14);
-	camera = new THREE.PerspectiveCamera(60, sceneWidth / sceneHeight, 0.1, 1000);//perspective camera
-	renderer = new THREE.WebGLRenderer({ alpha: true });//renderer with transparent backdrop
+	camera = new THREE.PerspectiveCamera(60, sceneWidth / sceneHeight, 0.1, 1000); //perspective camera
+	renderer = new THREE.WebGLRenderer({
+		alpha: true
+	}); //renderer with transparent backdrop
 	renderer.setClearColor(0xfffafa, 1);
-	renderer.shadowMap.enabled = true;//enable shadow
+	renderer.shadowMap.enabled = true; //enable shadow
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	renderer.setSize(sceneWidth, sceneHeight);
 	dom = document.getElementById('TutContainer');
@@ -95,13 +97,13 @@ function createScene() {
 	orbitControl.maxAzimuthAngle = 0.2;
 	*/
 
-	window.addEventListener('resize', onWindowResize, false);//resize callback
+	window.addEventListener('resize', onWindowResize, false); //resize callback
 
 	document.onkeydown = handleKeyDown;
 
 	scoreText = document.createElement('div');
 	scoreText.style.position = 'absolute';
-	scoreText.style.zIndex = 1;    // if you still don't see the label, try uncommenting this
+	scoreText.style.zIndex = 1; // if you still don't see the label, try uncommenting this
 	scoreText.style.width = 100;
 	scoreText.style.height = 100;
 	scoreText.style.backgroundColor = "transparent";
@@ -152,7 +154,7 @@ function createTreesPool() {
 function handleKeyDown(keyEvent) {
 	if (jumping) return;
 	var validMove = true;
-	if (keyEvent.keyCode === 37) {//left
+	if (keyEvent.keyCode === 37) { //left
 		if (currentLane == middleLane) {
 			currentLane = leftLane;
 		} else if (currentLane == rightLane) {
@@ -160,7 +162,7 @@ function handleKeyDown(keyEvent) {
 		} else {
 			validMove = false;
 		}
-	} else if (keyEvent.keyCode === 39) {//right
+	} else if (keyEvent.keyCode === 39) { //right
 		if (currentLane == middleLane) {
 			currentLane = rightLane;
 		} else if (currentLane == leftLane) {
@@ -169,7 +171,7 @@ function handleKeyDown(keyEvent) {
 			validMove = false;
 		}
 	} else {
-		if (keyEvent.keyCode === 38) {//up, jump
+		if (keyEvent.keyCode === 38) { //up, jump
 			bounceValue = 0.1;
 			jumping = true;
 		}
@@ -184,7 +186,10 @@ function handleKeyDown(keyEvent) {
 
 function addHero() {
 	var sphereGeometry = new THREE.DodecahedronGeometry(heroRadius, 1);
-	var sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xe5f2f2, shading: THREE.FlatShading })
+	var sphereMaterial = new THREE.MeshStandardMaterial({
+		color: 0xe5f2f2,
+		shading: THREE.FlatShading
+	})
 	jumping = false;
 	heroSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 	heroSphere.receiveShadow = true;
@@ -200,7 +205,10 @@ function addWorld() {
 	var sides = 40;
 	var tiers = 40;
 	var sphereGeometry = new THREE.SphereGeometry(worldRadius, sides, tiers);
-	var sphereMaterial = new THREE.MeshStandardMaterial({ color: 0xfffafa, shading: THREE.FlatShading })
+	var sphereMaterial = new THREE.MeshStandardMaterial({
+		color: 0xfffafa,
+		shading: THREE.FlatShading
+	})
 
 	var vertexIndex;
 	var vertexVector = new THREE.Vector3();
@@ -287,7 +295,7 @@ function addTree(inPath, row, isLeft) {
 		sphericalHelper.set(worldRadius - 0.3, pathAngleValues[row], -rollingGroundSphere.rotation.x + 4);
 	} else {
 		newTree = createTree();
-		var forestAreaAngle = 0;//[1.52,1.57,1.62];
+		var forestAreaAngle = 0; //[1.52,1.57,1.62];
 		if (isLeft) {
 			forestAreaAngle = 1.68 + Math.random() * 0.1;
 		} else {
@@ -311,7 +319,10 @@ function createTree() {
 	var midPointVector = new THREE.Vector3();
 	var vertexVector = new THREE.Vector3();
 	var treeGeometry = new THREE.ConeGeometry(0.5, 1, sides, tiers);
-	var treeMaterial = new THREE.MeshStandardMaterial({ color: 0x33ff33, shading: THREE.FlatShading });
+	var treeMaterial = new THREE.MeshStandardMaterial({
+		color: 0x33ff33,
+		shading: THREE.FlatShading
+	});
 	var offset;
 	midPointVector = treeGeometry.vertices[0].clone();
 	var currentTier = 0;
@@ -328,7 +339,10 @@ function createTree() {
 	treeTop.position.y = 0.9;
 	treeTop.rotation.y = (Math.random() * (Math.PI));
 	var treeTrunkGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.5);
-	var trunkMaterial = new THREE.MeshStandardMaterial({ color: 0x886633, shading: THREE.FlatShading });
+	var trunkMaterial = new THREE.MeshStandardMaterial({
+		color: 0x886633,
+		shading: THREE.FlatShading
+	});
 	var treeTrunk = new THREE.Mesh(treeTrunkGeometry, trunkMaterial);
 	treeTrunk.position.y = 0.25;
 	var tree = new THREE.Object3D();
@@ -409,7 +423,7 @@ function update() {
 	doTreeLogic();
 	doExplosionLogic();
 	render();
-	requestAnimationFrame(update);//request next update
+	requestAnimationFrame(update); //request next update
 }
 
 function doTreeLogic() {
