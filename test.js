@@ -36,6 +36,7 @@ var particles;
 var scoreText;
 var score;
 var hasCollided;
+var numberOfCollisions;
 
 init();
 
@@ -49,6 +50,7 @@ function init() {
 
 function createScene() {
 	hasCollided = false;
+	numberOfCollisions = 0;
 	score = 0;
 	treesInPath = [];
 	treesPool = [];
@@ -80,6 +82,7 @@ function createScene() {
 
 	camera.position.z = 6.5;
 	camera.position.y = 2.5;
+
 	/*
 	orbitControl = new THREE.OrbitControls( camera, renderer.domElement );//helper to rotate around in scene
 	orbitControl.addEventListener( 'change', render );
@@ -91,6 +94,7 @@ function createScene() {
 	orbitControl.minAzimuthAngle = -0.2;
 	orbitControl.maxAzimuthAngle = 0.2;
 	*/
+
 	window.addEventListener('resize', onWindowResize, false);//resize callback
 
 	document.onkeydown = handleKeyDown;
@@ -100,22 +104,27 @@ function createScene() {
 	scoreText.style.zIndex = 1;    // if you still don't see the label, try uncommenting this
 	scoreText.style.width = 100;
 	scoreText.style.height = 100;
-	scoreText.style.backgroundColor = "blue";
+	scoreText.style.backgroundColor = "transparent";
+	scoreText.style.fontFamily = 'Rubik Mono One';
+	scoreText.style.fontSize = '-webkit-xxx-large';
 	scoreText.innerHTML = "0";
 	scoreText.style.top = 50 + 'px';
-	scoreText.style.left = 10 + 'px';
+	scoreText.style.left = 50 + '%';
 	document.body.appendChild(scoreText);
 
 	var infoText = document.createElement('div');
 	infoText.style.position = 'absolute';
 	infoText.style.width = 100;
 	infoText.style.height = 100;
-	infoText.style.backgroundColor = "yellow";
+	infoText.style.backgroundColor = "transparent";
+	infoText.style.fontFamily = 'Rubik Mono One';
+	// infoText.style.fontSize = '-webkit-xxx-large';
 	infoText.innerHTML = "UP - Jump, Left/Right - Move";
-	infoText.style.top = 10 + 'px';
-	infoText.style.left = 10 + 'px';
+	infoText.style.top = 1 + '%';
+	infoText.style.left = 40 + '%';
 	document.body.appendChild(infoText);
 }
+
 function addExplosion() {
 	particleGeometry = new THREE.Geometry();
 	for (var i = 0; i < particleCount; i++) {
@@ -130,6 +139,7 @@ function addExplosion() {
 	scene.add(particles);
 	particles.visible = false;
 }
+
 function createTreesPool() {
 	var maxTreesInPool = 10;
 	var newTree;
@@ -138,6 +148,7 @@ function createTreesPool() {
 		treesPool.push(newTree);
 	}
 }
+
 function handleKeyDown(keyEvent) {
 	if (jumping) return;
 	var validMove = true;
@@ -391,6 +402,8 @@ function update() {
 		if (!hasCollided) {
 			score += 2 * treeReleaseInterval;
 			scoreText.innerHTML = score.toString();
+		} else {
+			// gameOver();
 		}
 	}
 	doTreeLogic();
@@ -406,10 +419,12 @@ function doTreeLogic() {
 	treesInPath.forEach(function (element, index) {
 		oneTree = treesInPath[index];
 		treePos.setFromMatrixPosition(oneTree.matrixWorld);
-		if (treePos.z > 6 && oneTree.visible) {//gone out of our view zone
+		if (treePos.z > 6 && oneTree.visible) {
+			// gone out of our view zone
 			treesToRemove.push(oneTree);
-		} else {//check collision
-			if (treePos.distanceTo(heroSphere.position) <= 0.6) {
+		} else {
+			//check collision
+			if (treePos.distanceTo(heroSphere.position) <= 0.3) {
 				console.log("hit");
 				hasCollided = true;
 				explode();
@@ -460,9 +475,26 @@ function render() {
 }
 
 function gameOver() {
+	var gameOver = document.createElement('div');
+	gameOver.style.position = 'absolute';
+	gameOver.style.zIndex = 999;
+	gameOver.style.width = '100%';
+	gameOver.style.height = '100%';
+	gameOver.style.backgroundColor = '#000';
+	gameOver.style.color = '#FFF';
+	gameOver.style.opacity = 0.65;
+	gameOver.style.top = '0px';
+	gameOver.style.left = '0px';
+	gameOver.style.textAlign = 'center';
+	gameOver.style.display = 'table';
+	scoreText.innerHTML = "0";
+	gameOver.innerHTML = "<p style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large; vertical-align: middle; display: table-cell;'> GAME OVER MUTHA FUCKA </p>";
+	document.body.appendChild(gameOver);
+
 	cancelAnimationFrame(globalRenderID);
 	window.clearInterval(powerupSpawnIntervalID);
 }
+
 function onWindowResize() {
 	//resize & align
 	sceneHeight = window.innerHeight;

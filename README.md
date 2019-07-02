@@ -20,7 +20,7 @@
   - [x] Tree on hit animation
   ***
 - [ ] Game Options [Sheikh]
-  - [ ] Score preview
+  - [x] Score preview
   - [ ] Game over (3 collides)
   ***
 - [ ] Game Manual (Report) [Sheikh]
