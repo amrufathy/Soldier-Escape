@@ -6,7 +6,7 @@ var renderer;
 var dom;
 var sun;
 var ground;
-// var orbitControl;
+var orbitControl;
 var rollingGroundSphere;
 var heroSphere;
 var rollingSpeed = 0.008;
@@ -85,17 +85,21 @@ function createScene() {
 	camera.position.z = 6.5;
 	camera.position.y = 2.5;
 
-	/*
+	
+	camera.position.z = 6.5;
+	camera.position.y = 3.5;
 	orbitControl = new THREE.OrbitControls( camera, renderer.domElement );//helper to rotate around in scene
-	orbitControl.addEventListener( 'change', render );
+	orbitControl.addEventListener('change', render );
+	// orbitControl.enableDamping = true;
+	// orbitControl.dampingFactor = 0.8;
 	orbitControl.noKeys = true;
-	orbitControl.noPan = true;
+	orbitControl.noPan = false;
 	orbitControl.enableZoom = false;
 	orbitControl.minPolarAngle = 1.1;
 	orbitControl.maxPolarAngle = 1.1;
 	orbitControl.minAzimuthAngle = -0.2;
 	orbitControl.maxAzimuthAngle = 0.2;
-	*/
+	
 
 	window.addEventListener('resize', onWindowResize, false); //resize callback
 
@@ -417,7 +421,7 @@ function update() {
 			score += 2 * treeReleaseInterval;
 			scoreText.innerHTML = score.toString();
 		} else {
-			gameOver();
+			// gameOver();
 		}
 	}
 	doTreeLogic();
