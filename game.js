@@ -38,6 +38,9 @@ var score;
 var hasCollided;
 var numberOfCollisions;
 var gameOverFlag;
+var distanceCounter;
+var distanceMeter;
+var isPaused;
 
 init();
 
@@ -50,6 +53,8 @@ function init() {
 }
 
 function createScene() {
+	distanceCounter = 0;
+	// isPaused = false;
 	gameOverFlag = false;
 	hasCollided = false;
 	numberOfCollisions = 0;
@@ -63,7 +68,7 @@ function createScene() {
 	pathAngleValues = [1.52, 1.57, 1.62];
 	// Set width and height of the canvas
 	sceneWidth = window.innerWidth;
-	sceneHeight = window.innerHeight;
+	sceneHeight = Math.round(window.innerHeight * 0.99);
 	scene = new THREE.Scene(); //the 3d scene
 	scene.fog = new THREE.FogExp2(0xf0fff0, 0.14);
 	camera = new THREE.PerspectiveCamera(60, sceneWidth / sceneHeight, 0.1, 1000); //perspective camera
@@ -105,7 +110,7 @@ function createScene() {
 
 	scoreText = document.createElement('div');
 	scoreText.style.position = 'absolute';
-	scoreText.style.zIndex = 1; // if you still don't see the label, try uncommenting this
+	scoreText.style.zIndex = 1; 
 	scoreText.style.width = 100;
 	scoreText.style.height = 100;
 	scoreText.style.backgroundColor = "transparent";
@@ -122,11 +127,20 @@ function createScene() {
 	infoText.style.height = 100;
 	infoText.style.backgroundColor = "transparent";
 	infoText.style.fontFamily = 'Rubik Mono One';
-	// infoText.style.fontSize = '-webkit-xxx-large';
 	infoText.innerHTML = "UP - Jump, Left/Right - Move";
-	infoText.style.top = 1 + '%';
+	infoText.style.top = 1.5 + '%';
 	infoText.style.left = 40 + '%';
 	document.body.appendChild(infoText);
+
+	distanceMeter = document.createElement('div');
+	distanceMeter.style.position = 'absolute';
+	distanceMeter.style.width = 100;
+	distanceMeter.style.height = 100;
+	distanceMeter.innerHTML = "0m";
+	distanceMeter.style.top = 1 + '%';
+	distanceMeter.style.right = 10 + '%';
+	distanceMeter.style.fontFamily = 'Rubik Mono One';
+	document.body.appendChild(distanceMeter);
 }
 
 function addExplosion() {
@@ -156,6 +170,7 @@ function createTreesPool() {
 function handleKeyDown(keyEvent) {
 	if (jumping) return;
 	var validMove = true;
+	// if (keyEvent.keyCode === 80) pause();
 	if (keyEvent.keyCode === 37) { //left
 		if (currentLane == middleLane) {
 			currentLane = leftLane;
@@ -403,6 +418,7 @@ function tightenTree(vertices, sides, currentTier) {
 function update() {
 	//stats.update();
 	//animate
+	// if (isPaused) return;
 	if (gameOverFlag) return;
 	rollingGroundSphere.rotation.x += rollingSpeed;
 	heroSphere.rotation.x -= heroRollingSpeed;
@@ -416,9 +432,15 @@ function update() {
 	if (clock.getElapsedTime() > treeReleaseInterval) {
 		clock.start();
 		addPathTree();
+		distanceCounter++;
 		if (!hasCollided) {
 			score += 2 * treeReleaseInterval;
 			scoreText.innerHTML = score.toString();
+			distanceMeter.innerHTML = "Completed: " + distanceCounter + "m" + "<br>Highest: " + localStorage.getItem("newscore") + "m"
+			if (distanceCounter > (localStorage.getItem("newscore"))) {
+				localStorage.setItem("newscore", distanceCounter)
+				console.log("high score is " + localStorage.getItem("newscore"))
+			}
 		} else {
 			gameOver();
 		}
@@ -504,12 +526,15 @@ function gameOver() {
 	gameOver.style.top = '0px';
 	gameOver.style.left = '0px';
 	gameOver.style.textAlign = 'center';
-	gameOver.style.display = 'table';
+	gameOver.style.display = 'flex';
 	scoreText.innerHTML = "0";
-	// gameOver.innerHTML = "<p style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large; vertical-align: middle; display: table-cell;'> GAME OVER WITH SCORE OF: " + score + " </p> <button id='restart'  style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large; vertical-align: bottom; display: table-cell;'>Push me</button>";
-	gameOver.innerHTML = "<p style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large;'> GAME OVER WITH SCORE OF: " + score + " </p> <button id='restart'  onClick='restart()' style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large;'>Restart Game</button>";
+	gameOver.style.flexDirection = 'column';
+	gameOver.style.justifyContent = 'center';
+	gameOver.style.alignItems = 'center';
+	gameOver.innerHTML = "<p style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large; vertical-align: middle; display: table;'> GAME OVER WITH SCORE OF: " + score + " </p> <button id='restart'  onClick='restart()' style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large; vertical-align: middle; display: table-cell;'>Restart Game</button>";
 	document.body.appendChild(gameOver);
 
+	distanceCounter = 0;
 	heroRollingSpeed = 0;
 	rollingGroundSphere.rotation.x = 0;
 	rollingSpeed = 0;
@@ -526,6 +551,20 @@ function restart() {
 	rollingSpeed = 0.008;
 	heroRollingSpeed = (rollingSpeed * worldRadius / heroRadius) / 5;
 	update();
+}
+
+function pause() {
+	isPaused = !isPaused;
+	if (isPaused) {
+		heroRollingSpeed = 0;
+		rollingGroundSphere.rotation.x = 0;
+		rollingSpeed = 0;
+		heroRollingSpeed = 0;
+	} else {
+		rollingSpeed = 0.008;
+		heroRollingSpeed = (rollingSpeed * worldRadius / heroRadius) / 5;
+		update();
+	}
 }
 
 function onWindowResize() {
