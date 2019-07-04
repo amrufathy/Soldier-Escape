@@ -37,6 +37,7 @@ var scoreText;
 var score;
 var hasCollided;
 var numberOfCollisions;
+var gameOverFlag;
 
 init();
 
@@ -49,6 +50,7 @@ function init() {
 }
 
 function createScene() {
+	gameOverFlag = false;
 	hasCollided = false;
 	numberOfCollisions = 0;
 	score = 0;
@@ -81,11 +83,11 @@ function createScene() {
 	addHero();
 	addLight();
 	addExplosion();
-	
+
 	camera.position.z = 6.5;
 	camera.position.y = 3.5;
-	orbitControl = new THREE.OrbitControls( camera, renderer.domElement ); //helper to rotate around in scene
-	orbitControl.addEventListener('change', render );
+	orbitControl = new THREE.OrbitControls(camera, renderer.domElement); //helper to rotate around in scene
+	orbitControl.addEventListener('change', render);
 	// orbitControl.enableDamping = true;
 	// orbitControl.dampingFactor = 0.8;
 	orbitControl.noKeys = true;
@@ -95,7 +97,7 @@ function createScene() {
 	orbitControl.maxPolarAngle = 1.1;
 	orbitControl.minAzimuthAngle = -0.2;
 	orbitControl.maxAzimuthAngle = 0.2;
-	
+
 
 	window.addEventListener('resize', onWindowResize, false); //resize callback
 
@@ -177,7 +179,7 @@ function handleKeyDown(keyEvent) {
 		}
 		validMove = false;
 	}
-	//heroSphere.position.x=currentLane;
+	// heroSphere.position.x = currentLane;
 	if (validMove) {
 		jumping = true;
 		bounceValue = 0.06;
@@ -335,7 +337,7 @@ function createTree() {
 	tightenTree(treeGeometry.vertices, sides, 5);
 	var treeTop = new THREE.Mesh(treeGeometry, treeMaterial);
 	treeTop.castShadow = true;
-	treeTop.receiveShadow = false;
+	treeTop.receiveShadow = true;
 	treeTop.position.y = 0.9;
 	treeTop.rotation.y = (Math.random() * (Math.PI));
 	var treeTrunkGeometry = new THREE.CylinderGeometry(0.1, 0.1, 0.5);
@@ -401,6 +403,7 @@ function tightenTree(vertices, sides, currentTier) {
 function update() {
 	//stats.update();
 	//animate
+	if (gameOverFlag) return;
 	rollingGroundSphere.rotation.x += rollingSpeed;
 	heroSphere.rotation.x -= heroRollingSpeed;
 	if (heroSphere.position.y <= heroBaseY) {
@@ -437,10 +440,10 @@ function doTreeLogic() {
 			// gone out of our view zone
 			treesToRemove.push(oneTree);
 		} else {
-			//check collision
 			if (treePos.distanceTo(heroSphere.position) <= 0.6) {
-				console.log("hit");
+				// alert(treePos.x - heroSphere.position.x)
 				hasCollided = true;
+				console.log(numberOfCollisions);
 				explode();
 			}
 		}
@@ -452,7 +455,7 @@ function doTreeLogic() {
 		treesInPath.splice(fromWhere, 1);
 		treesPool.push(oneTree);
 		oneTree.visible = false;
-		console.log("remove tree");
+		// console.log("remove tree");
 	});
 }
 
@@ -490,6 +493,7 @@ function render() {
 
 function gameOver() {
 	var gameOver = document.createElement('div');
+	gameOver.id = 'gameOverDiv';
 	gameOver.style.position = 'absolute';
 	gameOver.style.zIndex = 999;
 	gameOver.style.width = '100%';
@@ -502,11 +506,26 @@ function gameOver() {
 	gameOver.style.textAlign = 'center';
 	gameOver.style.display = 'table';
 	scoreText.innerHTML = "0";
-	gameOver.innerHTML = "<p style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large; vertical-align: middle; display: table-cell;'> GAME OVER BRUH </p>";
+	// gameOver.innerHTML = "<p style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large; vertical-align: middle; display: table-cell;'> GAME OVER WITH SCORE OF: " + score + " </p> <button id='restart'  style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large; vertical-align: bottom; display: table-cell;'>Push me</button>";
+	gameOver.innerHTML = "<p style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large;'> GAME OVER WITH SCORE OF: " + score + " </p> <button id='restart'  onClick='restart()' style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large;'>Restart Game</button>";
 	document.body.appendChild(gameOver);
 
-	cancelAnimationFrame(globalRenderID);
-	window.clearInterval(powerupSpawnIntervalID);
+	heroRollingSpeed = 0;
+	rollingGroundSphere.rotation.x = 0;
+	rollingSpeed = 0;
+	heroRollingSpeed = 0;
+	gameOverFlag = true;
+}
+
+function restart() {
+	gameOverFlag = false;
+	hasCollided = false;
+	score = 0;
+	var parent = document.getElementById('gameOverDiv').parentElement;
+	parent.removeChild(document.getElementById('gameOverDiv'));
+	rollingSpeed = 0.008;
+	heroRollingSpeed = (rollingSpeed * worldRadius / heroRadius) / 5;
+	update();
 }
 
 function onWindowResize() {
