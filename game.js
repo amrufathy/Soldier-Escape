@@ -41,6 +41,8 @@ var gameOverFlag;
 var distanceCounter;
 var distanceMeter;
 var isPaused;
+var health;
+var globalRenderID;
 
 init();
 
@@ -53,8 +55,9 @@ function init() {
 }
 
 function createScene() {
+	health = 100;
 	distanceCounter = 0;
-	// isPaused = false;
+	isPaused = false;
 	gameOverFlag = false;
 	hasCollided = false;
 	numberOfCollisions = 0;
@@ -110,7 +113,7 @@ function createScene() {
 
 	scoreText = document.createElement('div');
 	scoreText.style.position = 'absolute';
-	scoreText.style.zIndex = 1; 
+	scoreText.style.zIndex = 1;
 	scoreText.style.width = 100;
 	scoreText.style.height = 100;
 	scoreText.style.backgroundColor = "transparent";
@@ -442,13 +445,15 @@ function update() {
 				console.log("high score is " + localStorage.getItem("newscore"))
 			}
 		} else {
-			gameOver();
+			if (health <= 0) {
+				gameOver();
+			}
 		}
 	}
 	doTreeLogic();
 	doExplosionLogic();
 	render();
-	requestAnimationFrame(update); //request next update
+	globalRenderID = requestAnimationFrame(update); //request next update
 }
 
 function doTreeLogic() {
@@ -463,9 +468,7 @@ function doTreeLogic() {
 			treesToRemove.push(oneTree);
 		} else {
 			if (treePos.distanceTo(heroSphere.position) <= 0.6) {
-				// alert(treePos.x - heroSphere.position.x)
 				hasCollided = true;
-				console.log(numberOfCollisions);
 				explode();
 			}
 		}
@@ -513,6 +516,7 @@ function render() {
 	renderer.render(scene, camera);
 }
 
+
 function gameOver() {
 	var gameOver = document.createElement('div');
 	gameOver.id = 'gameOverDiv';
@@ -540,6 +544,9 @@ function gameOver() {
 	rollingSpeed = 0;
 	heroRollingSpeed = 0;
 	gameOverFlag = true;
+	health = 100;
+
+	cancelAnimationFrame(globalRenderID);
 }
 
 function restart() {

@@ -21,6 +21,9 @@
   ***
 - [ ] Game Options [Sheikh]
   - [x] Score preview
-  - [ ] Game over (3 collides)
+  - [x] Background Music
+  - [x] High Score
+  - [x] Game over (3 hits)
+    - [ ] To fix colliding behavior
   ***
 - [ ] Game Manual (Report) [Sheikh]
