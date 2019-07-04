@@ -1,0 +1,27 @@
+{
+  "name": "ig-final-project",
+  "version": "1.0.0",
+  "description": "## TODO",
+  "main": "game.js",
+  "dependencies": {
+    "eslint": "^6.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hos-arafat/IG_Final_Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hos-arafat/IG_Final_Project/issues"
+  },
+  "homepage": "https://github.com/hos-arafat/IG_Final_Project#readme"
+}
