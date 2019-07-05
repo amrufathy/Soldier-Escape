@@ -30,7 +30,6 @@ let gameOverFlag;
 let distanceCounter;
 let distanceMeter;
 let isPaused;
-let health;
 let globalRenderID;
 
 init();
@@ -44,7 +43,6 @@ function init() {
 }
 
 function createScene() {
-  health = 100;
   distanceCounter = 0;
   isPaused = false;
   gameOverFlag = false;
@@ -98,37 +96,18 @@ function createScene() {
   document.onkeydown = handleKeyDown;
 
   scoreText = document.createElement('div');
-  scoreText.style.position = 'absolute';
-  scoreText.style.zIndex = 1;
-  scoreText.style.width = 100;
-  scoreText.style.height = 100;
-  scoreText.style.backgroundColor = 'transparent';
-  scoreText.style.fontFamily = 'Rubik Mono One';
-  scoreText.style.fontSize = '-webkit-xxx-large';
-  scoreText.innerHTML = '0';
-  scoreText.style.top = `${50}px`;
-  scoreText.style.left = `${50}%`;
+  scoreText.setAttribute('id', 'scoreBoard');
+  scoreText.innerHTML = score.toString();
   document.body.appendChild(scoreText);
 
   const infoText = document.createElement('div');
-  infoText.style.position = 'absolute';
-  infoText.style.width = 100;
-  infoText.style.height = 100;
-  infoText.style.backgroundColor = 'transparent';
-  infoText.style.fontFamily = 'Rubik Mono One';
+  infoText.setAttribute('id', 'infoBoard');
   infoText.innerHTML = 'UP - Jump, Left/Right - Move';
-  infoText.style.top = `${1.5}%`;
-  infoText.style.left = `${40}%`;
   document.body.appendChild(infoText);
 
   distanceMeter = document.createElement('div');
-  distanceMeter.style.position = 'absolute';
-  distanceMeter.style.width = 100;
-  distanceMeter.style.height = 100;
+  distanceMeter.setAttribute('id', 'distanceBoard');
   distanceMeter.innerHTML = '0m';
-  distanceMeter.style.top = `${1}%`;
-  distanceMeter.style.right = `${10}%`;
-  distanceMeter.style.fontFamily = 'Rubik Mono One';
   document.body.appendChild(distanceMeter);
 }
 
@@ -412,9 +391,6 @@ function tightenTree(vertices, sides, currentTier) {
 }
 
 function update() {
-  // stats.update();
-  // animate
-  // if (isPaused) return;
   const gravity = 0.005;
   const treeReleaseInterval = 0.5;
 
@@ -445,7 +421,7 @@ function update() {
       if (distanceCounter > localStorage.getItem('newscore')) {
         localStorage.setItem('newscore', distanceCounter);
       }
-    } else if (health <= 0) {
+    } else {
       gameOver();
     }
   }
@@ -516,21 +492,7 @@ function render() {
 function gameOver() {
   const gameOverDiv = document.createElement('div');
   gameOverDiv.id = 'gameOverDiv';
-  gameOverDiv.style.position = 'absolute';
-  gameOverDiv.style.zIndex = 999;
-  gameOverDiv.style.width = '100%';
-  gameOverDiv.style.height = '100%';
-  gameOverDiv.style.backgroundColor = '#000';
-  gameOverDiv.style.color = '#FFF';
-  gameOverDiv.style.opacity = 0.65;
-  gameOverDiv.style.top = '0px';
-  gameOverDiv.style.left = '0px';
-  gameOverDiv.style.textAlign = 'center';
-  gameOverDiv.style.display = 'flex';
-  gameOverDiv.style.flexDirection = 'column';
-  gameOverDiv.style.justifyContent = 'center';
-  gameOverDiv.style.alignItems = 'center';
-  gameOverDiv.innerHTML = `<p style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large; vertical-align: middle; display: table;'> GAME OVER WITH SCORE OF: ${score} </p> <button id='restart'  onClick='restart()' style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large; vertical-align: middle; display: table-cell;'>Restart Game</button>`;
+  gameOverDiv.innerHTML = `<p id='gameOverText'> GAME OVER WITH SCORE OF: ${score} </p> <button id='restart' onClick='restart()'>Restart Game</button>`;
   document.body.appendChild(gameOverDiv);
 
   score = 0;
@@ -542,7 +504,6 @@ function gameOver() {
   rollingSpeed = 0;
   heroRollingSpeed = 0;
   gameOverFlag = true;
-  health = 100;
 
   cancelAnimationFrame(globalRenderID);
 }
