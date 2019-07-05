@@ -1,0 +1,85 @@
+@font-face {
+    font-family: 'Rubik Mono One';
+    src: url('../../assets/fonts/RubikMonoOne_Regular.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html,
+body {
+    height: 90%;
+}
+
+body {
+    width: 90%;
+    background-color: #404040;
+}
+
+.container {
+    margin: 0%;
+}
+
+#scoreBoard {
+    position: absolute;
+    z-index: 1;
+    width: 100;
+    height: 100;
+    background-color: transparent;
+    font-family: 'Rubik Mono One', sans-serif;
+    font-size: -webkit-xxx-large;
+    top: 50px;
+    left: 50%;
+
+}
+
+#infoBoard {
+    position: absolute;
+    width: 100;
+    height: 100;
+    background-color: transparent;
+    font-family: 'Rubik Mono One', sans-serif;
+    top: 1.5%;
+    left: 40%;
+}
+
+#distanceBoard {
+    position: absolute;
+    width: 100;
+    height: 100;
+    top: 1%;
+    right: 10%;
+    font-family: 'Rubik Mono One', sans-serif;
+}
+
+#gameOverDiv {
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    color: #FFF;
+    opacity: 0.65;
+    top: 0px;
+    left: 0px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#gameOverText {
+    text-align: center;
+    font-family: 'Rubik Mono One', sans-serif;
+    font-size: -webkit-xxx-large;
+    vertical-align: middle;
+    display: table;
+}
+
+#restart {
+    text-align: center;
+    font-family: 'Rubik Mono One', sans-serif;
+    font-size: -webkit-xxx-large;
+    vertical-align: middle;
+    display: table-cell;
+}

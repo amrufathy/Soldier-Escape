@@ -112,37 +112,18 @@ function createScene() {
 	document.onkeydown = handleKeyDown;
 
 	scoreText = document.createElement('div');
-	scoreText.style.position = 'absolute';
-	scoreText.style.zIndex = 1;
-	scoreText.style.width = 100;
-	scoreText.style.height = 100;
-	scoreText.style.backgroundColor = "transparent";
-	scoreText.style.fontFamily = 'Rubik Mono One';
-	scoreText.style.fontSize = '-webkit-xxx-large';
+	scoreText.setAttribute("id", "scoreBoard");
 	scoreText.innerHTML = "0";
-	scoreText.style.top = 50 + 'px';
-	scoreText.style.left = 50 + '%';
 	document.body.appendChild(scoreText);
 
 	var infoText = document.createElement('div');
-	infoText.style.position = 'absolute';
-	infoText.style.width = 100;
-	infoText.style.height = 100;
-	infoText.style.backgroundColor = "transparent";
-	infoText.style.fontFamily = 'Rubik Mono One';
+	infoText.setAttribute("id", "infoBoard");
 	infoText.innerHTML = "UP - Jump, Left/Right - Move";
-	infoText.style.top = 1.5 + '%';
-	infoText.style.left = 40 + '%';
 	document.body.appendChild(infoText);
 
 	distanceMeter = document.createElement('div');
-	distanceMeter.style.position = 'absolute';
-	distanceMeter.style.width = 100;
-	distanceMeter.style.height = 100;
+	distanceMeter.setAttribute("id", "distanceBoard");
 	distanceMeter.innerHTML = "0m";
-	distanceMeter.style.top = 1 + '%';
-	distanceMeter.style.right = 10 + '%';
-	distanceMeter.style.fontFamily = 'Rubik Mono One';
 	document.body.appendChild(distanceMeter);
 }
 
@@ -445,9 +426,7 @@ function update() {
 				console.log("high score is " + localStorage.getItem("newscore"))
 			}
 		} else {
-			if (health <= 0) {
-				gameOver();
-			}
+			gameOver();
 		}
 	}
 	doTreeLogic();
@@ -516,26 +495,11 @@ function render() {
 	renderer.render(scene, camera);
 }
 
-
 function gameOver() {
 	var gameOver = document.createElement('div');
 	gameOver.id = 'gameOverDiv';
-	gameOver.style.position = 'absolute';
-	gameOver.style.zIndex = 999;
-	gameOver.style.width = '100%';
-	gameOver.style.height = '100%';
-	gameOver.style.backgroundColor = '#000';
-	gameOver.style.color = '#FFF';
-	gameOver.style.opacity = 0.65;
-	gameOver.style.top = '0px';
-	gameOver.style.left = '0px';
-	gameOver.style.textAlign = 'center';
-	gameOver.style.display = 'flex';
 	scoreText.innerHTML = "0";
-	gameOver.style.flexDirection = 'column';
-	gameOver.style.justifyContent = 'center';
-	gameOver.style.alignItems = 'center';
-	gameOver.innerHTML = "<p style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large; vertical-align: middle; display: table;'> GAME OVER WITH SCORE OF: " + score + " </p> <button id='restart'  onClick='restart()' style='text-align:center; font-family:Rubik Mono One; font-size:-webkit-xxx-large; vertical-align: middle; display: table-cell;'>Restart Game</button>";
+	gameOver.innerHTML = "<p id='gameOverText'> GAME OVER WITH SCORE OF: " + score + " </p> <button id='restart'  onClick='restart()'>Restart Game</button>";
 	document.body.appendChild(gameOver);
 
 	distanceCounter = 0;
