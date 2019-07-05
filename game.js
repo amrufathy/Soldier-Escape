@@ -3,7 +3,6 @@ let sceneHeight;
 let camera;
 let scene;
 let renderer;
-let dom;
 let rollingGroundSphere;
 let heroSphere;
 let rollingSpeed = 0.008;
@@ -14,14 +13,10 @@ let sphericalHelper;
 let pathAngleValues;
 const heroBaseY = 1.8;
 let bounceValue = 0.1;
-const gravity = 0.005;
-const leftLane = -1;
-const rightLane = 1;
 const middleLane = 0;
 let currentLane;
 let clock;
 let jumping;
-const treeReleaseInterval = 0.5;
 let treesInPath;
 let treesPool;
 let particleGeometry;
@@ -76,7 +71,7 @@ function createScene() {
   renderer.shadowMap.enabled = true; // enable shadow
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.setSize(sceneWidth, sceneHeight);
-  dom = document.getElementById('TutContainer');
+  const dom = document.getElementById('TutContainer');
   dom.appendChild(renderer.domElement);
 
   createTreesPool();
@@ -162,6 +157,9 @@ function createTreesPool() {
 }
 
 function handleKeyDown(keyEvent) {
+  const leftLane = -1;
+  const rightLane = 1;
+
   if (jumping) return;
   let validMove = true;
   // if (keyEvent.keyCode === 80) pause();
@@ -417,6 +415,9 @@ function update() {
   // stats.update();
   // animate
   // if (isPaused) return;
+  const gravity = 0.005;
+  const treeReleaseInterval = 0.5;
+
   if (gameOverFlag) return;
   rollingGroundSphere.rotation.x += rollingSpeed;
   heroSphere.rotation.x -= heroRollingSpeed;
