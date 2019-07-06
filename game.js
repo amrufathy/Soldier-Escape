@@ -85,7 +85,7 @@ function createScene() {
   orbitControl.addEventListener('change', render);
   orbitControl.enableKeys = false;
   orbitControl.enablePan = true;
-  orbitControl.enableZoom = false;
+  orbitControl.enableZoom = true;
   orbitControl.minPolarAngle = 1.1;
   orbitControl.maxPolarAngle = 1.1;
   orbitControl.minAzimuthAngle = -0.2;
@@ -284,7 +284,6 @@ function addTree(inPath, row, isLeft) {
     if (treesPool.length === 0) return;
     newTree = treesPool.pop();
     newTree.visible = true;
-    // console.log("add tree");
     treesInPath.push(newTree);
     sphericalHelper.set(
       worldRadius - 0.3,
@@ -373,7 +372,6 @@ function doTreeLogic() {
     treesInPath.splice(fromWhere, 1);
     treesPool.push(oneTree);
     oneTree.visible = false;
-    // console.log("remove tree");
   });
 }
 

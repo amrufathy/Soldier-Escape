@@ -10,7 +10,7 @@
   ***
 - [ ] User interaction [Amr]
   - [ ] Speed increase w.r.t time
-  - [ ] Camera zoom in/out
+  - [x] Camera zoom in/out
   - [ ] Change Planet color & texture (based on levels)
   ***
 - [ ] Animations [Hossam]
