@@ -8,7 +8,8 @@
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly",
     "THREE": "readonly",
-    "Tree": "readonly"
+    "Tree": "readonly",
+    "Scheduler": "readonly"
   },
   "parserOptions": {
     "ecmaVersion": 2018

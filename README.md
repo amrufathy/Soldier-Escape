@@ -9,9 +9,9 @@
   - [ ] make sure requirements are satisfied
   ***
 - [ ] User interaction [Amr]
-  - [ ] Speed increase w.r.t time
+  - [x] Speed increase w.r.t time
   - [x] Camera zoom in/out
-  - [ ] Change Planet color & texture (based on levels)
+  - [x] Change Planet color & texture (based on levels)
   ***
 - [ ] Animations [Hossam]
   - [ ] Character running

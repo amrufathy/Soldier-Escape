@@ -36,6 +36,7 @@ let distanceMeter;
 let isPaused;
 let globalRenderID;
 let levelCounter;
+let scheduler;
 
 init();
 
@@ -60,6 +61,7 @@ function createScene() {
   treeClock.start();
   levelClock = new THREE.Clock();
   levelClock.start();
+  scheduler = new Scheduler();
   heroRollingSpeed = (rollingSpeed * worldRadius) / heroRadius / 5;
   sphericalHelper = new THREE.Spherical();
   pathAngleValues = [1.52, 1.57, 1.62];
@@ -329,6 +331,8 @@ function update() {
     levelClock.start();
     rollingSpeed += 0.001;
     levelCounter += 1;
+    // update ground color using scheduler
+    rollingGroundSphere.material.color.setHex(scheduler.getNextColor());
     console.log(`Level ${levelCounter}`);
   }
   rollingGroundSphere.rotation.x += rollingSpeed;
