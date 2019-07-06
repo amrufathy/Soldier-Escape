@@ -333,7 +333,7 @@ function update() {
     levelCounter += 1;
     // update ground color using scheduler
     rollingGroundSphere.material.color.setHex(scheduler.getNextColor());
-    console.log(`Level ${levelCounter}`);
+    notifyLevel(levelCounter);
   }
   rollingGroundSphere.rotation.x += rollingSpeed;
   heroSphere.rotation.x -= heroRollingSpeed;
@@ -472,13 +472,13 @@ function pause() {
 }
 
 function notifyLevel(level) {
-	var levelUp = document.createElement('div');
-	levelUp.id = 'levelUpDiv';
-	levelUp.innerHTML = "<p id='levelUpText'> Level: " + level + " </p>";
-	document.body.appendChild(levelUp);
-	window.setTimeout(function () {
-		document.getElementById('levelUpDiv').remove()
-	}, 500);
+  const levelUpDiv = document.createElement('div');
+  levelUpDiv.id = 'levelUpDiv';
+  levelUpDiv.innerHTML = `<p id='levelUpText'> Level ${level} </p>`;
+  document.body.appendChild(levelUpDiv);
+  window.setTimeout(() => {
+    document.getElementById('levelUpDiv').remove();
+  }, 500);
 }
 
 function onWindowResize() {
