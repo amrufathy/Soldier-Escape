@@ -3,7 +3,7 @@
 class Scheduler {
   constructor() {
     this.idx = 0;
-    this.colors = ['0x02193c', '0x3369AD', '0x008080', '0x233532', '0x990000'];
+    this.colors = ['0xfffafa', '0x02193c', '0x3369AD', '0x008080', '0x233532', '0x990000'];
   }
 
   getNextColor() {
@@ -12,5 +12,9 @@ class Scheduler {
     this.idx = (this.idx + 1) % this.colors.length;
 
     return color;
+  }
+
+  reset() {
+    this.idx = 0;
   }
 }

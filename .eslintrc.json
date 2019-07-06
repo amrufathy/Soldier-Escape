@@ -9,7 +9,11 @@
     "SharedArrayBuffer": "readonly",
     "THREE": "readonly",
     "Tree": "readonly",
-    "Scheduler": "readonly"
+    "Scheduler": "readonly",
+    "World": "readonly",
+    "Hero": "readonly",
+    "Light": "readonly",
+    "Explosion": "readonly"
   },
   "parserOptions": {
     "ecmaVersion": 2018
