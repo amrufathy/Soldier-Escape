@@ -1,3 +1,11 @@
+// global game constants
+const worldRadius = 26;
+const heroRadius = 0.2;
+const heroBaseY = 1.8;
+const middleLane = 0;
+const particleCount = 20;
+const initRollingSpeed = 0.005;
+
 let sceneWidth;
 let sceneHeight;
 let camera;
@@ -5,22 +13,18 @@ let scene;
 let renderer;
 let rollingGroundSphere;
 let heroSphere;
-let rollingSpeed = 0.008;
+let rollingSpeed = initRollingSpeed;
 let heroRollingSpeed;
-const worldRadius = 26;
-const heroRadius = 0.2;
 let sphericalHelper;
 let pathAngleValues;
-const heroBaseY = 1.8;
 let bounceValue = 0.1;
-const middleLane = 0;
 let currentLane;
-let clock;
+let treeClock;
+let levelClock;
 let jumping;
 let treesInPath;
 let treesPool;
 let particleGeometry;
-const particleCount = 20;
 let explosionPower = 1.06;
 let particles;
 let scoreText;
@@ -31,6 +35,7 @@ let distanceCounter;
 let distanceMeter;
 let isPaused;
 let globalRenderID;
+let levelCounter;
 
 init();
 
@@ -48,10 +53,13 @@ function createScene() {
   gameOverFlag = false;
   hasCollided = false;
   score = 0;
+  levelCounter = 1;
   treesInPath = [];
   treesPool = [];
-  clock = new THREE.Clock();
-  clock.start();
+  treeClock = new THREE.Clock();
+  treeClock.start();
+  levelClock = new THREE.Clock();
+  levelClock.start();
   heroRollingSpeed = (rollingSpeed * worldRadius) / heroRadius / 5;
   sphericalHelper = new THREE.Spherical();
   pathAngleValues = [1.52, 1.57, 1.62];
@@ -312,8 +320,17 @@ function addTree(inPath, row, isLeft) {
 function update() {
   const gravity = 0.005;
   const treeReleaseInterval = 0.5;
+  const levelUpdateInterval = 30;
 
   if (gameOverFlag) return;
+
+  if (levelClock.getElapsedTime() > levelUpdateInterval) {
+    // update level & game speed
+    levelClock.start();
+    rollingSpeed += 0.001;
+    levelCounter += 1;
+    console.log(`Level ${levelCounter}`);
+  }
   rollingGroundSphere.rotation.x += rollingSpeed;
   heroSphere.rotation.x -= heroRollingSpeed;
   if (heroSphere.position.y <= heroBaseY) {
@@ -324,12 +341,12 @@ function update() {
   heroSphere.position.x = THREE.Math.lerp(
     heroSphere.position.x,
     currentLane,
-    2 * clock.getDelta(),
-    clock.getElapsedTime(),
+    2 * treeClock.getDelta(),
+    treeClock.getElapsedTime(),
   );
   bounceValue -= gravity;
-  if (clock.getElapsedTime() > treeReleaseInterval) {
-    clock.start();
+  if (treeClock.getElapsedTime() > treeReleaseInterval) {
+    treeClock.start();
     addPathTree();
     distanceCounter += 1;
     if (!hasCollided) {
@@ -420,7 +437,6 @@ function gameOver() {
   heroRollingSpeed = 0;
   rollingGroundSphere.rotation.x = 0;
   rollingSpeed = 0;
-  heroRollingSpeed = 0;
   gameOverFlag = true;
 
   cancelAnimationFrame(globalRenderID);
@@ -432,7 +448,8 @@ function restart() {
   score = 0;
   const parent = document.getElementById('gameOverDiv').parentElement;
   parent.removeChild(document.getElementById('gameOverDiv'));
-  rollingSpeed = 0.008;
+  rollingSpeed = initRollingSpeed;
+  levelCounter = 1;
   heroRollingSpeed = (rollingSpeed * worldRadius) / heroRadius / 5;
   update();
 }
@@ -443,9 +460,8 @@ function pause() {
     heroRollingSpeed = 0;
     rollingGroundSphere.rotation.x = 0;
     rollingSpeed = 0;
-    heroRollingSpeed = 0;
   } else {
-    rollingSpeed = 0.008;
+    rollingSpeed = initRollingSpeed;
     heroRollingSpeed = (rollingSpeed * worldRadius) / heroRadius / 5;
     update();
   }
