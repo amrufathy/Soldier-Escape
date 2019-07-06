@@ -471,6 +471,16 @@ function pause() {
   }
 }
 
+function notifyLevel(level) {
+	var levelUp = document.createElement('div');
+	levelUp.id = 'levelUpDiv';
+	levelUp.innerHTML = "<p id='levelUpText'> Level: " + level + " </p>";
+	document.body.appendChild(levelUp);
+	window.setTimeout(function () {
+		document.getElementById('levelUpDiv').remove()
+	}, 500);
+}
+
 function onWindowResize() {
   // resize & align
   sceneHeight = window.innerHeight;
