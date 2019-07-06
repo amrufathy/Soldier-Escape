@@ -23,7 +23,7 @@
   - [x] Score preview
   - [x] Background Music
   - [x] High Score
-  - [x] Game over (3 hits)
-    - [ ] To fix colliding behavior
+  - [x] Game over
+  - [x] Notify Level up
   ***
 - [ ] Game Manual (Report) [Sheikh]
