@@ -24,6 +24,7 @@ Following [this tutorial](https://gamedevelopment.tutsplus.com/tutorials/creatin
 - [x] Game Options [Sheikh]
   - [x] Score preview
   - [x] Background Music
+    - [x] Mute|unmute
   - [x] High Score
   - [x] Game over
   - [x] Notify Level up

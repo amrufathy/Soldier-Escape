@@ -139,6 +139,11 @@ function handleKeyDown(keyEvent) {
 
   if (jumping) return;
   let validMove = true;
+  
+  if (keyEvent.keyCode === 77) {
+    let sound_el = document.getElementById('track');
+    sound_el.muted = !sound_el.muted;
+  }
   // if (keyEvent.keyCode === 80) pause();
   if (keyEvent.keyCode === 37) {
     // left
