@@ -1,0 +1,28 @@
+//COLORS
+var Colors = {
+  
+  white:0xFFFFFF,
+  silver:0xC0C0C0,
+  gray:0x808080,
+  darkgray:0xAAAAAA,
+  black:0x000000,
+  brown:0x59332E,
+  red:0xFF0000,
+  darkred: 0x8b0000,
+  maroon:0x800000,
+  yellow:0xFFFF00,
+  pink:0xF5986E,
+  olive:0x808000,
+  lime:0x00FF00,
+  green:0x008000,
+  aqua:0x00FFFF,
+  teal:0x008080,
+  blue:0x0000FF,
+  navy:0x000080,
+  fuchsia:0xFF00FF,
+  purple:0x800080,
+  brownDark:0x23190F,
+  bluedark:0x0560C2,
+  lightblue:0x3498DB,
+  peachyellow:0xF7D9AA,
+};

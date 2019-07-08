@@ -267,7 +267,8 @@ function update() {
     notifyLevel(levelCounter);
   }
   rollingGroundSphere.rotation.x += rollingSpeed;
-  heroSphere.rotation.x -= heroRollingSpeed;
+  // heroSphere.rotation.x -= heroRollingSpeed;
+  hero.update_hero();
   if (heroSphere.position.y <= hero.baseY) {
     jumping = false;
     bounceValue = Math.random() * 0.04 + 0.005;
@@ -287,7 +288,7 @@ function update() {
     if (!hasCollided) {
       score += 2 * treeReleaseInterval;
       scoreText.innerHTML = score.toString();
-      distanceMeter.innerHTML = `Completed: ${distanceCounter}m<br>Highest: 
+      distanceMeter.innerHTML = `Completed: ${distanceCounter}m<br>Highest:
         ${localStorage.getItem('newscore')}m`;
       if (distanceCounter > localStorage.getItem('newscore')) {
         localStorage.setItem('newscore', distanceCounter);
