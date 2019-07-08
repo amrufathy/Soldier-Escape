@@ -4,8 +4,8 @@ Following [this tutorial](https://gamedevelopment.tutsplus.com/tutorials/creatin
 
 ## TODO
 
-- [ ] Human Character [Hossam]
-  - [ ] more complex than HW2
+- [x] Human Character [Hossam]
+  - [x] more complex than HW2
   ***
 - [ ] Lights and Textures [Amr]
   - [ ] make sure requirements are satisfied
@@ -16,8 +16,8 @@ Following [this tutorial](https://gamedevelopment.tutsplus.com/tutorials/creatin
   - [x] Change Planet color & texture (based on levels)
   ***
 - [ ] Animations [Hossam]
-  - [ ] Character running
-  - [ ] Character Jumping Up & Sideways
+  - [x] Character running
+  - [x] Character Jumping Up & Sideways
   - [ ] Character outfits [Pending]
   - [x] Tree on hit animation
   ***
