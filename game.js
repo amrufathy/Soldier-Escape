@@ -130,9 +130,9 @@ function createScene() {
 function gameInstructions() {
   const instructionsDiv = document.createElement('div');
   instructionsDiv.id = 'instructionsDiv';
-  instructionsDiv.innerHTML = `<p id='instructionsText'>UP - Jump, Left/Right - Move <br/> Press 'm' to un/mute sound</p><img id="image" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/160783/astroboy.png"/> <button id='start' onClick='startGame()'>Start Game</button>`;
-  $(document).mousemove(function(e){
-    $("#image").css({left:e.pageX, top:e.pageY});
+  instructionsDiv.innerHTML = '<p id="instructionsText">UP - Jump, Left/Right - Move <br/> Press "m" to un/mute sound</p><img id="image" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/160783/astroboy.png"/> <button id="start" onClick="startGame()">Start Game</button>';
+  $(document).mousemove((e) => {
+    $('#image').css({ left: e.pageX, top: e.pageY });
   });
   document.body.appendChild(instructionsDiv);
 }
@@ -157,10 +157,11 @@ function handleKeyDown(keyEvent) {
 
   if (jumping) return;
   let validMove = true;
-  
+
   if (keyEvent.keyCode === 77) {
-    let sound_el = document.getElementById('track');
-    sound_el.muted = !sound_el.muted;
+    // 'M' key
+    const soundElement = document.getElementById('track');
+    soundElement.muted = !soundElement.muted;
   }
   // if (keyEvent.keyCode === 80) pause();
   if (keyEvent.keyCode === 37) {
