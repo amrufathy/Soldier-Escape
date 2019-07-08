@@ -19,6 +19,11 @@ body {
     margin: 0%;
 }
 
+#image {
+    position: absolute;
+    z-index: -1;
+}
+
 #scoreBoard {
     position: absolute;
     z-index: 1;
@@ -29,7 +34,6 @@ body {
     font-size: -webkit-xxx-large;
     top: 50px;
     left: 50%;
-
 }
 
 #infoBoard {
@@ -40,6 +44,7 @@ body {
     font-family: 'RubikMonoOne', sans-serif;
     top: 1.5%;
     left: 40%;
+    text-align: center;
 }
 
 #distanceBoard {
@@ -51,32 +56,9 @@ body {
     font-family: 'RubikMonoOne', sans-serif;
 }
 
+#gameOverDiv,
+#instructionsDiv,
 #levelUpDiv {
-    position: absolute;
-    z-index: 999;
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    color: #000;
-    opacity: 1.0;
-    top: 0px;
-    left: 0px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-#levelUpText {
-    text-align: center;
-    font-family: 'RubikMonoOne', sans-serif;
-    font-size: -webkit-xxx-large;
-    vertical-align: middle;
-    display: table;
-}
-
-#gameOverDiv {
     position: absolute;
     z-index: 999;
     width: 100%;
@@ -93,7 +75,15 @@ body {
     align-items: center;
 }
 
-#gameOverText {
+#levelUpDiv {
+    background-color: transparent;
+    color: #000;
+    opacity: 1.0;
+}
+
+#gameOverText,
+#levelUpText,
+#instructionsText {
     text-align: center;
     font-family: 'RubikMonoOne', sans-serif;
     font-size: -webkit-xxx-large;
@@ -101,7 +91,8 @@ body {
     display: table;
 }
 
-#restart {
+#restart,
+#start {
     text-align: center;
     font-family: 'RubikMonoOne', sans-serif;
     font-size: -webkit-xxx-large;

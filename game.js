@@ -41,8 +41,11 @@ function init() {
   // set up the scene
   createScene();
 
+  // instructions to play game
+  gameInstructions();
+
   // call game loop
-  update();
+  // update();
 }
 
 function createScene() {
@@ -115,13 +118,28 @@ function createScene() {
 
   const infoText = document.createElement('div');
   infoText.setAttribute('id', 'infoBoard');
-  infoText.innerHTML = 'UP - Jump, Left/Right - Move';
+  infoText.innerHTML = 'UP - Jump, Left/Right - Move <br/> "M" un/mute';
   document.body.appendChild(infoText);
 
   distanceMeter = document.createElement('div');
   distanceMeter.setAttribute('id', 'distanceBoard');
   distanceMeter.innerHTML = '0m';
   document.body.appendChild(distanceMeter);
+}
+
+function gameInstructions() {
+  const instructionsDiv = document.createElement('div');
+  instructionsDiv.id = 'instructionsDiv';
+  instructionsDiv.innerHTML = `<p id='instructionsText'>UP - Jump, Left/Right - Move <br/> Press 'm' to un/mute sound</p><img id="image" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/160783/astroboy.png"/> <button id='start' onClick='startGame()'>Start Game</button>`;
+  $(document).mousemove(function(e){
+    $("#image").css({left:e.pageX, top:e.pageY});
+  });
+  document.body.appendChild(instructionsDiv);
+}
+
+function startGame() {
+  document.getElementById('instructionsDiv').remove();
+  update();
 }
 
 function createTreesPool() {
