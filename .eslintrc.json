@@ -14,7 +14,8 @@
     "World": "readonly",
     "Hero": "readonly",
     "Light": "readonly",
-    "Explosion": "readonly"
+    "Explosion": "readonly",
+    "colors": "readonly"
   },
   "parserOptions": {
     "ecmaVersion": 2018

@@ -11,7 +11,6 @@ let renderer;
 let rollingGroundSphere;
 let heroSphere;
 let rollingSpeed = initRollingSpeed;
-let heroRollingSpeed;
 let sphericalHelper;
 let bounceValue = 0.1;
 let currentLane;
@@ -43,9 +42,6 @@ function init() {
 
   // instructions to play game
   gameInstructions();
-
-  // call game loop
-  // update();
 }
 
 function createScene() {
@@ -74,7 +70,6 @@ function createScene() {
   hero = new Hero(scene);
   sun = new Light(scene);
   explosion = new Explosion(scene, particleCount);
-  heroRollingSpeed = (rollingSpeed * world.radius) / hero.radius / 5;
   rollingGroundSphere = world.body;
   heroSphere = hero.body;
 
@@ -139,6 +134,8 @@ function gameInstructions() {
 
 function startGame() {
   document.getElementById('instructionsDiv').remove();
+
+  // call game loop
   update();
 }
 
@@ -267,8 +264,7 @@ function update() {
     notifyLevel(levelCounter);
   }
   rollingGroundSphere.rotation.x += rollingSpeed;
-  // heroSphere.rotation.x -= heroRollingSpeed;
-  hero.update_hero();
+  hero.update();
   if (heroSphere.position.y <= hero.baseY) {
     jumping = false;
     bounceValue = Math.random() * 0.04 + 0.005;
@@ -342,7 +338,6 @@ function gameOver() {
   scoreText.innerHTML = score.toString();
 
   distanceCounter = 0;
-  heroRollingSpeed = 0;
   rollingGroundSphere.rotation.x = 0;
   rollingSpeed = 0;
   gameOverFlag = true;
@@ -358,7 +353,6 @@ function restart() {
   parent.removeChild(document.getElementById('gameOverDiv'));
   rollingSpeed = initRollingSpeed;
   levelCounter = 1;
-  heroRollingSpeed = (rollingSpeed * world.radius) / hero.radius / 5;
   scheduler.reset();
   update();
 }
@@ -366,12 +360,10 @@ function restart() {
 function pause() {
   isPaused = !isPaused;
   if (isPaused) {
-    heroRollingSpeed = 0;
     rollingGroundSphere.rotation.x = 0;
     rollingSpeed = 0;
   } else {
     rollingSpeed = initRollingSpeed;
-    heroRollingSpeed = (rollingSpeed * world.radius) / hero.radius / 5;
     update();
   }
 }
