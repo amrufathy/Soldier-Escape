@@ -125,7 +125,7 @@ function createScene() {
 function gameInstructions() {
   const instructionsDiv = document.createElement('div');
   instructionsDiv.id = 'instructionsDiv';
-  instructionsDiv.innerHTML = '<p id="instructionsText">UP - Jump, Left/Right - Move <br/> Press "m" to un/mute sound</p><img id="image" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/160783/astroboy.png"/> <button id="start" onClick="startGame()">Start Game</button>';
+  instructionsDiv.innerHTML = '<p id="instructionsText">UP - Jump, Left/Right - Move <br/> Press "m" to un/mute sound</p><button id="start" onClick="startGame()">Start Game</button>';
   $(document).mousemove((e) => {
     $('#image').css({ left: e.pageX, top: e.pageY });
   });

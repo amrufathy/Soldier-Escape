@@ -28,5 +28,6 @@ Following [this tutorial](https://gamedevelopment.tutsplus.com/tutorials/creatin
   - [x] High Score
   - [x] Game over
   - [x] Notify Level up
+  - [x] Instructions Screen
   ***
 - [ ] Game Manual (Report) [Sheikh]

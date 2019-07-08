@@ -19,10 +19,6 @@ body {
     margin: 0%;
 }
 
-#image {
-    position: absolute;
-    z-index: -1;
-}
 
 #scoreBoard {
     position: absolute;
@@ -73,6 +69,10 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#instructionsDiv{
+    opacity: 1.0;
 }
 
 #levelUpDiv {
