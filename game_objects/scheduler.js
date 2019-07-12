@@ -7,7 +7,7 @@ class Scheduler {
   }
 
   getNextColor() {
-    const color = this.colors[this.idx];
+    let color = this.colors[this.idx];
 
     this.idx = (this.idx + 1) % this.colors.length;
 

@@ -161,7 +161,15 @@ function handleKeyDown(keyEvent) {
     soundElement.muted = !soundElement.muted;
   }
   // if (keyEvent.keyCode === 80) pause();
-  if (keyEvent.keyCode === 37) {
+  // if (keyEvent.keyCode === 67) hero.changeCharacter();
+
+   if(document.getElementById('instructionsDiv') != undefined && keyEvent.keyCode === 32) {
+    startGame();
+  }
+  if(document.getElementById('gameOverDiv') != undefined && keyEvent.keyCode === 32 && gameOverFlag) {
+   restart();
+ }
+  if (keyEvent.keyCode === 37 || keyEvent.keyCode === 65) {
     // left
     if (currentLane === middleLane) {
       currentLane = leftLane;
@@ -170,7 +178,7 @@ function handleKeyDown(keyEvent) {
     } else {
       validMove = false;
     }
-  } else if (keyEvent.keyCode === 39) {
+  } else if (keyEvent.keyCode === 39 || keyEvent.keyCode === 68) {
     // right
     if (currentLane === middleLane) {
       currentLane = rightLane;
@@ -180,7 +188,7 @@ function handleKeyDown(keyEvent) {
       validMove = false;
     }
   } else {
-    if (keyEvent.keyCode === 38) {
+    if (keyEvent.keyCode === 38 || keyEvent.keyCode === 87) {
       // up, jump
       bounceValue = 0.1;
       jumping = true;
@@ -356,6 +364,8 @@ function restart() {
   rollingSpeed = initRollingSpeed;
   levelCounter = 1;
   scheduler.reset();
+  rollingGroundSphere.material.color.setHex(scheduler.getNextColor());
+  levelClock.stop();
   update();
 }
 
