@@ -125,7 +125,7 @@ function createScene() {
 function gameInstructions() {
   const instructionsDiv = document.createElement('div');
   instructionsDiv.id = 'instructionsDiv';
-  instructionsDiv.innerHTML = '<p id="instructionsText">UP - Jump, Left/Right - Move <br/> Press "m" to un/mute sound</p><button id="start" onClick="startGame()">Start Game</button>';
+  instructionsDiv.innerHTML = '<p id="instructionsText">How far can you go? <br/> Your first hit is your last. <br/> UP - Jump, Left/Right - Move <br/> Press "m" to un/mute sound</p><button id="start" onClick="startGame()">Start Game</button>';
   $(document).mousemove((e) => {
     $('#image').css({ left: e.pageX, top: e.pageY });
   });
@@ -340,6 +340,7 @@ function gameOver() {
   distanceCounter = 0;
   rollingGroundSphere.rotation.x = 0;
   rollingSpeed = 0;
+  scheduler.reset();
   gameOverFlag = true;
 
   cancelAnimationFrame(globalRenderID);
