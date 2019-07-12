@@ -341,6 +341,7 @@ function gameOver() {
   rollingGroundSphere.rotation.x = 0;
   rollingSpeed = 0;
   scheduler.reset();
+  levelClock.stop();
   gameOverFlag = true;
 
   cancelAnimationFrame(globalRenderID);
