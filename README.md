@@ -1,33 +1,14 @@
-# IG Final Project
+# Endless Running Lumber-Jack
 
-Following [this tutorial](https://gamedevelopment.tutsplus.com/tutorials/creating-a-simple-3d-endless-runner-game-using-three-js--cms-29157)
+This game was developed using Three.JS for the July 2019 Interactive Graphics Final Project.
+The game was developed in inspiration from [this tutorial](https://gamedevelopment.tutsplus.com/tutorials/creating-a-simple-3d-endless-runner-game-using-three-js--cms-29157)
 
-## TODO
-
-- [x] Human Character [Hossam]
-  - [x] more complex than HW2
+## Team members are
+- Ahmed El Sheikh - 1873337
   ***
-- [ ] Lights and Textures [Amr]
-  - [ ] make sure requirements are satisfied
-  ***
-- [x] User interaction [Amr]
-  - [x] Speed increase w.r.t time
-  - [x] Camera zoom in/out
-  - [x] Change Planet color & texture (based on levels)
+- Amr Aly - 1848399
   ***
 - [ ] Animations [Hossam]
-  - [x] Character running
-  - [x] Character Jumping Up & Sideways
-  - [ ] Character outfits [Pending]
-  - [x] Tree on hit animation
   ***
 - [x] Game Options [Sheikh]
-  - [x] Score preview
-  - [x] Background Music
-    - [x] Mute|unmute
-  - [x] High Score
-  - [x] Game over
-  - [x] Notify Level up
-  - [x] Instructions Screen
   ***
-- [ ] Game Manual (Report) [Sheikh]
