@@ -5,10 +5,7 @@ The game was developed in inspiration from [this tutorial](https://gamedevelopme
 
 ## Team members are
 - Ahmed El Sheikh - 1873337
-  ***
 - Amr Aly - 1848399
-  ***
-- [ ] Animations [Hossam]
-  ***
-- [x] Game Options [Sheikh]
+- Hossam Arafat - 1803850
+- Karim Ghonim - 1774086
   ***
