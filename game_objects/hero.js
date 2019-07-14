@@ -9,7 +9,7 @@ class Hero {
     this.skinColor = colors.pink;
     this.hairColor = colors.black;
     this.shirtColor = colors.yellow;
-    this.shortsColor = colors.olive;
+    this.shortsColor = colors.navy;
 
     this.angleHairs = 0;
 
@@ -37,6 +37,10 @@ class Hero {
     // createBox (dimension of the box, color, position relative to world coordinates )
     // width, height, depth
     this.torso = Hero.createBox(0.1, 0.2, 0.1, this.shirtColor, 0, 0.23, 0, 'Torso');
+    var texture = new THREE.TextureLoader().load( 'assets/img/pattern.png' );
+    this.torso.receiveShadow = true ;
+    this.torso.castShadow = true ;
+    this.torso.material.map = texture ;
 
     // createBox (width, lenth, depth, color, (left, up, depth) position relative to world coordinates )
     // ( +ve is right, +ve is up, +ve is closer to the screen / camera)
