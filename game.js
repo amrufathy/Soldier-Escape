@@ -33,6 +33,7 @@ let world;
 let hero;
 let sun;
 let explosion;
+let health;
 
 init();
 
@@ -52,6 +53,7 @@ function createScene() {
   hasCollided = false;
   score = 0;
   levelCounter = 1;
+  health = 3;
   currentLane = middleLane;
   jumping = false;
   treesInPath = [];
@@ -296,16 +298,20 @@ function update() {
     distanceCounter += 1;
     if (!hasCollided) {
       score += 2 * treeReleaseInterval;
-      scoreText.innerHTML = score.toString();
-      distanceMeter.innerHTML = `Completed: ${distanceCounter}m<br>Highest:
-        ${localStorage.getItem('newscore')}m`;
       if (distanceCounter > localStorage.getItem('newscore')) {
         localStorage.setItem('newscore', distanceCounter);
       }
     } else {
-      gameOver();
+      hasCollided = false;
     }
   }
+
+  scoreText.innerHTML = score.toString();
+  distanceMeter.innerHTML = `Completed: ${distanceCounter}m<br>Highest:
+        ${localStorage.getItem('newscore')}m<br>Health: ${health}`;
+
+  if (health === 0) gameOver();
+
   doTreeLogic();
   explosion.logic();
   render();
@@ -323,6 +329,7 @@ function doTreeLogic() {
       // gone out of our view zone
       treesToRemove.push(oneTree);
     } else if (treePos.distanceTo(heroSphere.position) <= 0.6) {
+      if (!hasCollided) health -= 1;
       hasCollided = true;
       explosion.explode(heroSphere);
     }
@@ -364,6 +371,7 @@ function restart() {
   gameOverFlag = false;
   hasCollided = false;
   score = 0;
+  health = 3;
   const parent = document.getElementById('gameOverDiv').parentElement;
   parent.removeChild(document.getElementById('gameOverDiv'));
   rollingSpeed = initRollingSpeed;
