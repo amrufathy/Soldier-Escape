@@ -163,12 +163,17 @@ function handleKeyDown(keyEvent) {
   // if (keyEvent.keyCode === 80) pause();
   // if (keyEvent.keyCode === 67) hero.changeCharacter();
 
-   if(document.getElementById('instructionsDiv') != undefined && keyEvent.keyCode === 32) {
+  if (document.getElementById('instructionsDiv') !== undefined && keyEvent.keyCode === 32) {
     startGame();
   }
-  if(document.getElementById('gameOverDiv') != undefined && keyEvent.keyCode === 32 && gameOverFlag) {
-   restart();
- }
+
+  if (
+    document.getElementById('gameOverDiv') !== undefined
+    && keyEvent.keyCode === 32
+    && gameOverFlag
+  ) {
+    restart();
+  }
   if (keyEvent.keyCode === 37 || keyEvent.keyCode === 65) {
     // left
     if (currentLane === middleLane) {
