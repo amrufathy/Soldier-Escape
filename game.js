@@ -35,7 +35,7 @@ const trees = [];
 const clouds = [];
 const birds = [];
 const pickups = [];
-let speed = 1;
+let speed = 4;
 const lanes = [-35, 0, 35];
 
 window.onload = function() {
@@ -216,6 +216,14 @@ kd.RIGHT.down(function() {
   if (car.mesh.position.x < 75) car.mesh.position.x += 2;
 });
 
+function disp_health(h) {
+  if (h === 3) scoreDiv.innerHTML = `Score: ${score}<br> <i class="fa fa-heart"></i> <i class="fa fa-heart"></i> <i class="fa fa-heart"></i> Health: ${health}`;
+  if (h === 2) scoreDiv.innerHTML = `Score: ${score}<br> <i class="fa fa-heart"></i> <i class="fa fa-heart"></i> Health: ${health}`;
+  if (h === 1) scoreDiv.innerHTML = `Score: ${score}<br> <i class="fa fa-heart"></i> Health: ${health}`;
+  if (h === 0) scoreDiv.innerHTML = `Score: ${score}<br> Health: ${health}`;
+
+}
+
 function loop() {
   if (gameOverFlag) return;
 
@@ -238,6 +246,7 @@ function loop() {
 
     if (in_collision_range && tree.mesh.visible) {
       health -= 1;
+      disp_health(health)
       tree.mesh.visible = false;
       explosion.explode(tree);
       tree.resetLocation(max, min);
@@ -290,7 +299,8 @@ function loop() {
     }
   });
 
-  scoreDiv.innerHTML = `Score: ${score}<br>Health: ${health}`;
+  // scoreDiv.innerHTML = `Score: ${score}<br> <i class="fa fa-heart"></i> <i class="fa fa-heart"></i> <i class="fa fa-heart"></i> Health: ${health}`;
+  disp_health(health)
 
   carLevel += 0.16;
   car.mesh.position.y = 51.75 + Math.cos(carLevel) * 0.25;
@@ -309,13 +319,16 @@ function restart() {
   gameOverFlag = false;
   score = 0;
   health = 3;
+  disp_health(health)
   const parent = document.getElementById('gameOverDiv').parentElement;
   parent.removeChild(document.getElementById('gameOverDiv'));
-  speed = 1;
+  speed = 4;
   loop();
 }
 
 function gameOver() {
+  health = 0;
+  disp_health(health)
   const gameOverDiv = document.createElement('div');
   gameOverDiv.id = 'gameOverDiv';
   gameOverDiv.innerHTML = `<p id='gameOverText'> GAME OVER WITH SCORE OF: ${score} </p> <button id='restart'> Press space to restart</button>`;
