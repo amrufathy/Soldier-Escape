@@ -28,7 +28,7 @@ let globalRenderID;
 let carLevel = 0;
 let collectibleLevel = 0;
 let score = 0;
-let health = 3;
+let health = 5;
 const currentLane = 1;
 
 const trees = [];
@@ -217,11 +217,13 @@ kd.RIGHT.down(function() {
 });
 
 function disp_health(h) {
-  if (h === 3) scoreDiv.innerHTML = `Score: ${score}<br> <i class="fa fa-heart"></i> <i class="fa fa-heart"></i> <i class="fa fa-heart"></i> Health: ${health}`;
-  if (h === 2) scoreDiv.innerHTML = `Score: ${score}<br> <i class="fa fa-heart"></i> <i class="fa fa-heart"></i> Health: ${health}`;
-  if (h === 1) scoreDiv.innerHTML = `Score: ${score}<br> <i class="fa fa-heart"></i> Health: ${health}`;
-  if (h === 0) scoreDiv.innerHTML = `Score: ${score}<br> Health: ${health}`;
+  let score_str = `Score: ${score}<br>`;
 
+  for (let i = 0; i < h; i += 1) {
+    score_str += `<i class="fa fa-heart"></i> `;
+  }
+
+  scoreDiv.innerHTML = score_str;
 }
 
 function loop() {
@@ -246,7 +248,6 @@ function loop() {
 
     if (in_collision_range && tree.mesh.visible) {
       health -= 1;
-      disp_health(health)
       tree.mesh.visible = false;
       explosion.explode(tree);
       tree.resetLocation(max, min);
@@ -299,15 +300,13 @@ function loop() {
     }
   });
 
-  // scoreDiv.innerHTML = `Score: ${score}<br> <i class="fa fa-heart"></i> <i class="fa fa-heart"></i> <i class="fa fa-heart"></i> Health: ${health}`;
-  disp_health(health)
-
   carLevel += 0.16;
   car.mesh.position.y = 51.75 + Math.cos(carLevel) * 0.25;
   car.driver.updateHairs();
 
   speed += 0.001;
 
+  disp_health(health);
   explosion.logic();
   renderer.render(scene, camera);
   kd.tick();
@@ -318,25 +317,27 @@ function restart() {
   car.mesh.position.x = 0;
   gameOverFlag = false;
   score = 0;
-  health = 3;
-  disp_health(health)
+  health = 5;
+  speed = 4;
+
   const parent = document.getElementById('gameOverDiv').parentElement;
   parent.removeChild(document.getElementById('gameOverDiv'));
-  speed = 4;
+
+  disp_health(health);
   loop();
 }
 
 function gameOver() {
+  speed = 0;
   health = 0;
-  disp_health(health)
+  gameOverFlag = true;
+
   const gameOverDiv = document.createElement('div');
   gameOverDiv.id = 'gameOverDiv';
   gameOverDiv.innerHTML = `<p id='gameOverText'> GAME OVER WITH SCORE OF: ${score} </p> <button id='restart'> Press space to restart</button>`;
   document.body.appendChild(gameOverDiv);
 
-  speed = 0;
-  gameOverFlag = true;
-
+  disp_health(health);
   cancelAnimationFrame(globalRenderID);
 }
 
