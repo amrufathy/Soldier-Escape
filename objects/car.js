@@ -18,26 +18,26 @@ export class Car {
     this.mesh.add(body);
 
     // tires
-    let wheelTireGeom = new THREE.CylinderGeometry(10, 10, 4);
-    let wheelTireMat = new THREE.MeshPhongMaterial({
+    let tireGeom = new THREE.CylinderGeometry(10, 10, 4);
+    let tireMat = new THREE.MeshPhongMaterial({
       color: Colors.brownDark,
       shading: THREE.FlatShading
     });
-    let wheelTire = new THREE.Mesh(wheelTireGeom, wheelTireMat);
-    wheelTire.castShadow = true;
-    wheelTire.rotation.z = Math.PI / 2;
-    let wheelTireFL = wheelTire.clone();
-    wheelTireFL.position.set(25, -18, 20);
-    this.mesh.add(wheelTireFL);
-    let wheelTireFR = wheelTire.clone();
-    wheelTireFR.position.set(-25, -18, 20);
-    this.mesh.add(wheelTireFR);
-    let wheelTireBL = wheelTire.clone();
-    wheelTireBL.position.set(25, -18, -20);
-    this.mesh.add(wheelTireBL);
-    let wheelTireBR = wheelTire.clone();
-    wheelTireBR.position.set(-25, -18, -20);
-    this.mesh.add(wheelTireBR);
+    let tire = new THREE.Mesh(tireGeom, tireMat);
+    tire.castShadow = true;
+    tire.rotation.z = Math.PI / 2;
+    let tireFL = tire.clone();
+    tireFL.position.set(25, -18, 20);
+    this.mesh.add(tireFL);
+    let tireFR = tire.clone();
+    tireFR.position.set(-25, -18, 20);
+    this.mesh.add(tireFR);
+    let tireBL = tire.clone();
+    tireBL.position.set(25, -18, -20);
+    this.mesh.add(tireBL);
+    let tireBR = tire.clone();
+    tireBR.position.set(-25, -18, -20);
+    this.mesh.add(tireBR);
 
     // windshield
     let geomWindshield = new THREE.BoxGeometry(3, 20, 45, 1, 1, 1);
@@ -91,35 +91,9 @@ export class Car {
     let backLightsL = lights.clone();
     backLightsL.position.set(-20, 10, -40);
     this.mesh.add(backLightsL);
-
     let backLightsR = lights.clone();
     backLightsR.position.set(20, 10, -40);
     this.mesh.add(backLightsR);
-
-    let frontLightsL = lights.clone();
-    frontLightsL.position.set(-20, 10, 40);
-    this.mesh.add(frontLightsL);
-
-    let frontLightsR = lights.clone();
-    frontLightsR.position.set(20, 10, 40);
-    this.mesh.add(frontLightsR);
-
-    // engine vent
-    let engineVentGeom = new THREE.BoxGeometry(40, 2, 1);
-    let engineVentMat = new THREE.MeshPhongMaterial({
-      color: Colors.white,
-      shading: THREE.FlatShading
-    });
-    let engineVent = new THREE.Mesh(engineVentGeom, engineVentMat);
-    let engineVentT = engineVent.clone();
-    this.mesh.add(engineVentT);
-    engineVentT.position.set(0, 0, 40);
-    let engineVentM = engineVent.clone();
-    this.mesh.add(engineVentM);
-    engineVentM.position.set(0, -3, 40);
-    let engineVentB = engineVent.clone();
-    this.mesh.add(engineVentB);
-    engineVentB.position.set(0, -6, 40);
 
     // driver
     this.driver = new Driver();

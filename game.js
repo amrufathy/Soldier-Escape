@@ -8,35 +8,25 @@ import { Tree } from './objects/tree.js';
 
 let scene;
 let camera;
-let fieldOfView;
-let aspectRatio;
-let nearPlane;
-let farPlane;
 let HEIGHT;
 let WIDTH;
 let renderer;
-let container;
-let hemisphereLight;
-let shadowLight;
 let car;
-let ground;
 let explosion;
 let scoreDiv;
-let gameOverFlag = false;
 let globalRenderID;
 
+let gameOverFlag = false;
 let carLevel = 0;
 let collectibleLevel = 0;
 let score = 0;
 let health = 5;
-const currentLane = 1;
+let speed = 4;
 
 const trees = [];
 const clouds = [];
 const birds = [];
-const pickups = [];
-let speed = 4;
-const lanes = [-35, 0, 35];
+const collectibles = [];
 
 window.onload = function() {
   init();
@@ -63,20 +53,13 @@ function createScene() {
   scene = new THREE.Scene();
   scene.fog = new THREE.Fog(0xf7d9aa, 10, 950);
 
-  aspectRatio = WIDTH / HEIGHT;
-  fieldOfView = 60;
-  nearPlane = 1;
-  farPlane = 1000;
-
   camera = new THREE.PerspectiveCamera(
-    fieldOfView,
-    aspectRatio,
-    nearPlane,
-    farPlane
+    60, // field of view
+    WIDTH / HEIGHT, // aspect ratio
+    1, // near plane
+    1000 // far plane
   );
-  camera.position.x = 0;
-  camera.position.z = 200;
-  camera.position.y = 100;
+  camera.position.set(0, 100, 200);
 
   renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setSize(WIDTH, HEIGHT);
@@ -84,7 +67,7 @@ function createScene() {
 
   explosion = new Explosion(scene, 10);
 
-  container = document.getElementById('world');
+  const container = document.getElementById('world');
   container.appendChild(renderer.domElement);
 
   window.addEventListener('resize', handleWindowResize, false);
@@ -105,9 +88,9 @@ function handleWindowResize() {
 }
 
 function createLights() {
-  hemisphereLight = new THREE.HemisphereLight(0xaaaaaa, 0x000000, 0.9);
+  const hemisphereLight = new THREE.HemisphereLight(0xaaaaaa, 0x000000, 0.9);
 
-  shadowLight = new THREE.DirectionalLight(0xffffff, 0.9);
+  const shadowLight = new THREE.DirectionalLight(0xffffff, 0.9);
   shadowLight.position.set(150, 350, 350);
   shadowLight.castShadow = true;
 
@@ -128,18 +111,18 @@ function createLights() {
 function createCar() {
   car = new Car();
   car.mesh.scale.set(0.5, 0.5, 0.5);
+  car.mesh.position.x = 0;
   car.mesh.position.y = 50;
   car.mesh.rotation.y = Math.PI;
-  car.mesh.position.x = 0;
 
   scene.add(car.mesh);
 }
 
 function createGround() {
-  ground = new Ground(WIDTH);
-  scene.add(ground.mesh);
+  const ground = new Ground(WIDTH);
   ground.mesh.position.y = 38;
   ground.mesh.rotation.x = -Math.PI / 2;
+  scene.add(ground.mesh);
 }
 
 function createTrees() {
@@ -149,10 +132,11 @@ function createTrees() {
   for (let i = 0; i < 20; i += 1) {
     const tree = new Tree();
     scene.add(tree.mesh);
-    tree.mesh.position.x = Math.floor(Math.random() * (max - min + 1)) + min;
-    tree.mesh.position.y = 35;
-    tree.mesh.position.z = Math.floor(Math.random() * -700);
-
+    tree.mesh.position.set(
+      Math.floor(Math.random() * (max - min + 1)) + min,
+      35,
+      Math.floor(Math.random() * -700)
+    );
     trees.push(tree);
   }
 }
@@ -164,9 +148,11 @@ function createSky() {
   for (let i = 0; i < 10; i += 1) {
     const cloud = new Cloud();
     scene.add(cloud.mesh);
-    cloud.mesh.position.x = Math.floor(Math.random() * (max - min + 1)) + min;
-    cloud.mesh.position.y = 250;
-    cloud.mesh.position.z = Math.floor(Math.random() * -700);
+    cloud.mesh.position.set(
+      Math.floor(Math.random() * (max - min + 1)) + min,
+      250,
+      Math.floor(Math.random() * -700)
+    );
 
     clouds.push(cloud);
   }
@@ -179,11 +165,12 @@ function createBirds() {
   for (let i = 0; i < 10; i += 1) {
     const bird = new Bird();
     scene.add(bird.mesh);
-    bird.mesh.position.x = Math.floor(Math.random() * (max - min + 1)) + min;
-    bird.mesh.position.y = 300;
-    bird.mesh.position.z = Math.floor(Math.random() * -700);
+    bird.mesh.position.set(
+      Math.floor(Math.random() * (max - min + 1)) + min,
+      300,
+      Math.floor(Math.random() * -700)
+    );
     bird.moveRightLeft = Math.round(Math.random());
-
     bird.mesh.rotation.y = Math.PI / 2;
     bird.mesh.scale.set(0.3, 0.3, 0.3);
 
@@ -198,13 +185,13 @@ function createCollectibles() {
   for (let i = 0; i < 10; i += 1) {
     const collectibe = new Collectible();
     scene.add(collectibe.mesh);
+    collectibe.mesh.position.set(
+      Math.floor(Math.random() * (max - min + 1)) + min,
+      55,
+      Math.floor(Math.random() * -700)
+    );
 
-    collectibe.mesh.position.x =
-      Math.floor(Math.random() * (max - min + 1)) + min;
-    collectibe.mesh.position.y = 55;
-    collectibe.mesh.position.z = Math.floor(Math.random() * -700);
-
-    pickups.push(collectibe);
+    collectibles.push(collectibe);
   }
 }
 
@@ -274,25 +261,20 @@ function loop() {
     if (bird.mesh.position.z > 200) bird.mesh.position.z = -700;
   });
 
-  pickups.forEach(item => {
-    let in_collision_range =
-      Math.abs(item.mesh.position.x - car.mesh.position.x) < 20 &&
-      Math.abs(item.mesh.position.z - car.mesh.position.z) < 40;
-
-    // rotate
+  collectibles.forEach(item => {
     item.mesh.rotation.y += (3 * Math.PI) / 180;
 
-    // translate (to keep in same place)
     item.mesh.position.z += speed;
     collectibleLevel += 0.1;
     item.mesh.position.y += Math.cos(collectibleLevel) * 0.25;
 
-    // check if out of screen
-    if (item.mesh.position.z > 200) {
-      item.mesh.position.z = -700;
-    }
+    if (item.mesh.position.z > 200) item.mesh.position.z = -700;
 
     // collision
+    let in_collision_range =
+      Math.abs(item.mesh.position.x - car.mesh.position.x) < 20 &&
+      Math.abs(item.mesh.position.z - car.mesh.position.z) < 40;
+
     if (in_collision_range) {
       score += 1;
       item.mesh.visible = false;

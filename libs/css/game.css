@@ -1,85 +1,83 @@
 @font-face {
-    font-family: 'RubikMonoOne';
-    src: url('../../assets/fonts/RubikMonoOne_Regular.ttf');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
-  html,
-  body {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-  }
-  
-  #world {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    background: linear-gradient(#e4e0ba, #f7d9aa);
-  }
-  
-  
-  #infoBoard {
-    position: absolute;
-    width: 100;
-    height: 100;
-    background-color: transparent;
-    font-family: 'RubikMonoOne', sans-serif;
-    top: 1.5%;
-    left: 40%;
-    text-align: center;
-  }
-  
-  #scoreBoard {
-    position: absolute;
-    width: 100;
-    height: 100;
-    top: 1%;
-    right: 10%;
-    font-family: 'RubikMonoOne', sans-serif;
-  }
-  
-  #gameOverDiv,
-  #instructionsDiv {
-    position: absolute;
-    z-index: 999;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    color: #fff;
-    opacity: 0.65;
-    top: 0px;
-    left: 0px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  #instructionsDiv {
-    opacity: 1;
-  }
-  
-  #gameOverText,
-  #instructionsText {
-    text-align: center;
-    font-family: 'RubikMonoOne', sans-serif;
-    font-size: -webkit-xxx-large;
-    vertical-align: middle;
-    display: table;
-  }
-  
-  #restart,
-  #start {
-    text-align: center;
-    font-family: 'RubikMonoOne', sans-serif;
-    font-size: -webkit-xxx-large;
-    vertical-align: middle;
-    display: table-cell;
-  } */
-  
+  font-family: 'RubikMonoOne';
+  src: url('../../assets/fonts/RubikMonoOne_Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+#world {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background: linear-gradient(#e4e0ba, #f7d9aa);
+}
+
+#infoBoard {
+  position: absolute;
+  width: 100;
+  height: 100;
+  background-color: transparent;
+  font-family: 'RubikMonoOne', sans-serif;
+  top: 1.5%;
+  left: 40%;
+  text-align: center;
+}
+
+#scoreBoard {
+  position: absolute;
+  width: 100;
+  height: 100;
+  top: 1%;
+  right: 10%;
+  font-family: 'RubikMonoOne', sans-serif;
+}
+
+#gameOverDiv,
+#instructionsDiv {
+  position: absolute;
+  z-index: 999;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  color: #fff;
+  opacity: 0.65;
+  top: 0px;
+  left: 0px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#instructionsDiv {
+  opacity: 1;
+}
+
+#gameOverText,
+#instructionsText {
+  text-align: center;
+  font-family: 'RubikMonoOne', sans-serif;
+  font-size: -webkit-xxx-large;
+  vertical-align: middle;
+  display: table;
+}
+
+#restart,
+#start {
+  text-align: center;
+  font-family: 'RubikMonoOne', sans-serif;
+  font-size: -webkit-xxx-large;
+  vertical-align: middle;
+  display: table-cell;
+}

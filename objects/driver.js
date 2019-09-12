@@ -48,18 +48,6 @@ export class Driver {
     hairs.position.set(-5, 5, 0);
     this.mesh.add(hairs);
 
-    // let glassGeom = new THREE.BoxGeometry(5, 5, 5);
-    // let glassMat = new THREE.MeshLambertMaterial({ color: Colors.brown });
-    // let glassR = new THREE.Mesh(glassGeom, glassMat);
-    // glassR.position.set(6, 0, 3);
-    // let glassL = glassR.clone();
-    // glassL.position.z = -glassR.position.z;
-    // let glassAGeom = new THREE.BoxGeometry(11, 1, 11);
-    // let glassA = new THREE.Mesh(glassAGeom, glassMat);
-    // this.mesh.add(glassR);
-    // this.mesh.add(glassL);
-    // this.mesh.add(glassA);
-
     // ears
     let earGeom = new THREE.BoxGeometry(2, 3, 2);
     let earL = new THREE.Mesh(earGeom, headMat);
