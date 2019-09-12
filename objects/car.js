@@ -9,7 +9,7 @@ export class Car {
     // car body
     let bodyMat = new THREE.MeshPhongMaterial({
       color: Colors.red,
-      shading: THREE.FlatShading
+      flatShading: true
     });
     let bodyGeom = new THREE.BoxGeometry(50, 30, 80, 1, 1, 1);
     let body = new THREE.Mesh(bodyGeom, bodyMat);
@@ -21,7 +21,7 @@ export class Car {
     let tireGeom = new THREE.CylinderGeometry(10, 10, 4);
     let tireMat = new THREE.MeshPhongMaterial({
       color: Colors.brownDark,
-      shading: THREE.FlatShading
+      flatShading: true
     });
     let tire = new THREE.Mesh(tireGeom, tireMat);
     tire.castShadow = true;
@@ -45,7 +45,7 @@ export class Car {
       color: Colors.white,
       transparent: true,
       opacity: 0.3,
-      shading: THREE.FlatShading
+      flatShading: true
     });
     let windshield = new THREE.Mesh(geomWindshield, matWindshield);
     windshield.position.set(0, 20, 30);
@@ -58,7 +58,7 @@ export class Car {
     let bumperGeom = new THREE.BoxGeometry(55, 6, 6);
     let bumperMat = new THREE.MeshPhongMaterial({
       color: Colors.white,
-      shading: THREE.FlatShading
+      flatShading: true
     });
     let bumper = new THREE.Mesh(bumperGeom, bumperMat);
     bumper.receiveShadow = true;
@@ -73,7 +73,7 @@ export class Car {
     let numberPlateGeom = new THREE.BoxGeometry(12, 10, 2);
     let numberPlateMat = new THREE.MeshPhongMaterial({
       color: Colors.white,
-      shading: THREE.FlatShading
+      flatShading: true
     });
     let numberPlate = new THREE.Mesh(numberPlateGeom, numberPlateMat);
     numberPlate.receiveShadow = true;
@@ -84,7 +84,7 @@ export class Car {
     let lightsGeom = new THREE.BoxGeometry(6, 8, 2);
     let lightsMat = new THREE.MeshPhongMaterial({
       color: Colors.pink,
-      shading: THREE.FlatShading
+      flatShading: true
     });
     let lights = new THREE.Mesh(lightsGeom, lightsMat);
     lights.receiveShadow = true;

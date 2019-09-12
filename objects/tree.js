@@ -9,7 +9,7 @@ export class Tree {
     let bushGeom = new THREE.DodecahedronGeometry(20);
     let bushMat = new THREE.MeshPhongMaterial({
       color: Colors.green,
-      shading: THREE.FlatShading
+      flatShading: true
     });
     let bush = new THREE.Mesh(bushGeom, bushMat);
     this.mesh.add(bush);
@@ -25,7 +25,7 @@ export class Tree {
     );
     let trunkMat = new THREE.MeshPhongMaterial({
       color: Colors.brown,
-      shading: THREE.FlatShading
+      flatShading: true
     });
     let trunk = new THREE.Mesh(trunkGeom, trunkMat);
     trunk.castShadow = true;

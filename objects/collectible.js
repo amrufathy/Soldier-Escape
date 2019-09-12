@@ -7,7 +7,7 @@ export class Collectible {
       specular: 0x2aff5a,
       emissive: 0x009900,
       shininess: 70,
-      shading: THREE.FlatShading,
+      flatShading: true,
       blending: THREE.NormalBlending
     });
     const geom = new THREE.IcosahedronGeometry(7, 0);

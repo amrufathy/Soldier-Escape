@@ -9,7 +9,7 @@ export class Bird {
     const wingGeom = new THREE.BoxGeometry(5, 30, 20);
     const wingMat = new THREE.MeshPhongMaterial({
       color: Colors.brownDark,
-      shading: THREE.FlatShading
+      flatShading: true
     });
 
     const wing = new THREE.Mesh(wingGeom, wingMat);
