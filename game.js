@@ -5,6 +5,7 @@ import { Explosion } from './objects/explosion.js';
 import { Collectible } from './objects/collectible.js';
 import { Ground } from './objects/ground.js';
 import { Tree } from './objects/tree.js';
+import { Plane } from './objects/plane.js';
 
 let scene;
 let camera;
@@ -17,8 +18,6 @@ let scoreDiv;
 let globalRenderID;
 
 let gameOverFlag = false;
-let carLevel = 0;
-let collectibleLevel = 0;
 let score = 0;
 let health = 5;
 let speed = 4;
@@ -27,6 +26,7 @@ const trees = [];
 const clouds = [];
 const birds = [];
 const collectibles = [];
+const planes = [];
 
 window.onload = function() {
   init();
@@ -42,6 +42,7 @@ function init() {
   createBirds();
   createSky();
   createCollectibles();
+  createPlanes();
 
   gameInstructions();
 }
@@ -110,88 +111,72 @@ function createLights() {
 
 function createCar() {
   car = new Car();
-  car.mesh.scale.set(0.5, 0.5, 0.5);
-  car.mesh.position.x = 0;
-  car.mesh.position.y = 50;
-  car.mesh.rotation.y = Math.PI;
-
   scene.add(car.mesh);
 }
 
 function createGround() {
   const ground = new Ground(WIDTH);
-  ground.mesh.position.y = 38;
-  ground.mesh.rotation.x = -Math.PI / 2;
   scene.add(ground.mesh);
 }
 
 function createTrees() {
-  const max = WIDTH / 4;
-  const min = -WIDTH / 4;
+  const limit = WIDTH / 4;
 
   for (let i = 0; i < 20; i += 1) {
     const tree = new Tree();
     scene.add(tree.mesh);
-    tree.mesh.position.set(
-      Math.floor(Math.random() * (max - min + 1)) + min,
-      35,
-      Math.floor(Math.random() * -700)
-    );
+    tree.mesh.position.x = getRandomInt(-limit, limit);
+    tree.mesh.position.z = getRandomInt(0, -700);
     trees.push(tree);
   }
 }
 
 function createSky() {
-  const max = WIDTH / 2;
-  const min = -WIDTH / 2;
+  const limit = WIDTH / 2;
 
   for (let i = 0; i < 10; i += 1) {
     const cloud = new Cloud();
     scene.add(cloud.mesh);
-    cloud.mesh.position.set(
-      Math.floor(Math.random() * (max - min + 1)) + min,
-      250,
-      Math.floor(Math.random() * -700)
-    );
+    cloud.mesh.position.x = getRandomInt(-limit, limit);
+    cloud.mesh.position.z = getRandomInt(0, -700);
 
     clouds.push(cloud);
   }
 }
 
 function createBirds() {
-  const max = WIDTH / 4;
-  const min = -WIDTH / 4;
+  const limit = WIDTH / 4;
 
   for (let i = 0; i < 10; i += 1) {
     const bird = new Bird();
     scene.add(bird.mesh);
-    bird.mesh.position.set(
-      Math.floor(Math.random() * (max - min + 1)) + min,
-      300,
-      Math.floor(Math.random() * -700)
-    );
+    bird.mesh.position.x = getRandomInt(-limit, limit);
+    bird.mesh.position.z = getRandomInt(0, -700);
     bird.moveRightLeft = Math.round(Math.random());
-    bird.mesh.rotation.y = Math.PI / 2;
-    bird.mesh.scale.set(0.3, 0.3, 0.3);
 
     birds.push(bird);
   }
 }
 
 function createCollectibles() {
-  const max = 75;
-  const min = -75;
-
   for (let i = 0; i < 10; i += 1) {
     const collectibe = new Collectible();
     scene.add(collectibe.mesh);
-    collectibe.mesh.position.set(
-      Math.floor(Math.random() * (max - min + 1)) + min,
-      55,
-      Math.floor(Math.random() * -700)
-    );
+    collectibe.mesh.position.x = getRandomInt(-75, 75);
+    collectibe.mesh.position.z = getRandomInt(0, -700);
 
     collectibles.push(collectibe);
+  }
+}
+
+function createPlanes() {
+  for (let i = 0; i < 3; i += 1) {
+    const plane = new Plane();
+    scene.add(plane.mesh);
+    plane.mesh.position.x = getRandomInt(-75, 75);
+    plane.mesh.position.z = getRandomInt(0, -700);
+
+    planes.push(plane);
   }
 }
 
@@ -218,14 +203,13 @@ function loop() {
 
   if (health === 0) gameOver();
 
-  const max = WIDTH / 4;
-  const min = -WIDTH / 4;
+  const limit = WIDTH / 4;
 
   trees.forEach(tree => {
     tree.mesh.position.z += speed;
 
     if (tree.mesh.position.z > 200) {
-      tree.resetLocation(max, min);
+      tree.resetLocation(-limit, limit);
     }
 
     // collision
@@ -237,7 +221,7 @@ function loop() {
       health -= 1;
       tree.mesh.visible = false;
       explosion.explode(tree);
-      tree.resetLocation(max, min);
+      tree.resetLocation(-limit, limit);
     }
   });
 
@@ -262,11 +246,8 @@ function loop() {
   });
 
   collectibles.forEach(item => {
-    item.mesh.rotation.y += (3 * Math.PI) / 180;
-
+    item.rotate();
     item.mesh.position.z += speed;
-    collectibleLevel += 0.1;
-    item.mesh.position.y += Math.cos(collectibleLevel) * 0.25;
 
     if (item.mesh.position.z > 200) item.mesh.position.z = -700;
 
@@ -282,13 +263,21 @@ function loop() {
     }
   });
 
-  carLevel += 0.16;
-  car.mesh.position.y = 51.75 + Math.cos(carLevel) * 0.25;
-  car.driver.updateHairs();
+  planes.forEach(plane => {
+    plane.update();
+
+    plane.mesh.position.z += 1.5 * speed;
+
+    if (plane.mesh.position.z > 200) {
+      plane.mesh.position.x = getRandomInt(-75, 75);
+      plane.mesh.position.z = getRandomInt(-1500, -700);
+    }
+  });
 
   speed += 0.001;
 
   disp_health(health);
+  car.update();
   explosion.logic();
   renderer.render(scene, camera);
   kd.tick();
@@ -360,4 +349,10 @@ function startGame() {
 
   // call game loop
   loop();
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }

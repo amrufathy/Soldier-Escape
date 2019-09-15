@@ -31,9 +31,10 @@ export class Tree {
     trunk.castShadow = true;
 
     this.mesh.add(trunk);
+    this.mesh.position.y = 35;
   }
 
-  resetLocation(max, min) {
+  resetLocation(min, max) {
     this.mesh.position.z = -700;
     this.mesh.position.x = Math.floor(Math.random() * (max - min + 1)) + min;
     this.mesh.visible = true;

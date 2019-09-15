@@ -21,6 +21,8 @@ export class Cloud {
       m.castShadow = true;
       this.mesh.add(m);
     }
+
+    this.mesh.position.y = 250;
   }
 
   rotate() {

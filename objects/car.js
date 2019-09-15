@@ -7,11 +7,11 @@ export class Car {
     this.mesh.name = 'car';
 
     // car body
+    let bodyGeom = new THREE.BoxGeometry(50, 30, 80, 1, 1, 1);
     let bodyMat = new THREE.MeshPhongMaterial({
       color: Colors.red,
       flatShading: true
     });
-    let bodyGeom = new THREE.BoxGeometry(50, 30, 80, 1, 1, 1);
     let body = new THREE.Mesh(bodyGeom, bodyMat);
     body.castShadow = true;
     body.receiveShadow = true;
@@ -100,5 +100,18 @@ export class Car {
     this.driver.mesh.position.set(-10, 27, 10);
     this.driver.mesh.rotation.y = -Math.PI / 2;
     this.mesh.add(this.driver.mesh);
+
+    this.mesh.position.x = 0;
+    this.mesh.position.y = 50;
+    this.mesh.rotation.y = Math.PI;
+    this.mesh.scale.set(0.5, 0.5, 0.5);
+
+    this.level = 0;
+  }
+
+  update() {
+    this.level += 0.16;
+    this.mesh.position.y = 50 + Math.cos(this.level) * 0.25;
+    this.driver.updateHairs();
   }
 }

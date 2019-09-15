@@ -10,5 +10,8 @@ export class Ground {
     this.mesh = new THREE.Mesh(groundGeom, groundMat);
     this.mesh.name = 'ground';
     this.mesh.receiveShadow = true;
+
+    this.mesh.position.y = 38;
+    this.mesh.rotation.x = -Math.PI / 2;
   }
 }
