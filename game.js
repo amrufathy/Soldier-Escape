@@ -18,6 +18,7 @@ let scoreDiv;
 let globalRenderID;
 
 let gameOverFlag = false;
+let hack = false;
 let score = 0;
 let health = 5;
 let speed = 4;
@@ -218,7 +219,7 @@ function loop() {
       Math.abs(tree.mesh.position.z - car.mesh.position.z) < 40;
 
     if (in_collision_range && tree.mesh.visible) {
-      health -= 1;
+      if (!hack) health -= 1;
       tree.mesh.visible = false;
       explosion.explode(tree);
       tree.resetLocation(-limit, limit);
@@ -295,7 +296,7 @@ function loop() {
       if (hit && plane.bomb.mesh.visible) {
         explosion.explode(plane);
         plane.bomb.reset();
-        health -= 1;
+        if (!hack) health -= 1;
         plane.firing = false;
       }
     }
@@ -349,6 +350,11 @@ function handleKeyDown(keyEvent) {
     // 'M' key
     const soundElement = document.getElementById('track');
     soundElement.muted = !soundElement.muted;
+  }
+
+  if (keyEvent.keyCode === 72) {
+    // 'H' key
+    hack = !hack;
   }
 
   if (
