@@ -30,12 +30,6 @@ export class Bomb {
 
     this.mesh.add(body);
 
-    // tail
-    let tailGeom;
-    let tailMat;
-    let tail = new THREE.Mesh(tailGeom, tailMat);
-
-    // this.mesh.add(tail);
     this.mesh.scale.set(0.15, 0.15, 0.15);
     this.mesh.rotation.x = Math.PI;
   }
