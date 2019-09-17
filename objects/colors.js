@@ -6,5 +6,28 @@ export const Colors = {
   brownDark: 0x23190f,
   blue: 0x68c3c0,
   ground: 0x654321,
-  green: 0x96ceb4
+  green: 0x96ceb4,
+
+  // old colors
+  // white: 0xffffff,
+  // red: 0xff0000,
+  // green: 0x008000,
+  // blue: 0x0000ff,
+  silver: 0xc0c0c0,
+  gray: 0x808080,
+  darkgray: 0xaaaaaa,
+  black: 0x000000,
+  darkred: 0x8b0000,
+  maroon: 0x800000,
+  yellow: 0xffff00,
+  olive: 0x808000,
+  lime: 0x00ff00,
+  aqua: 0x00ffff,
+  teal: 0x008080,
+  navy: 0x000080,
+  fuchsia: 0xff00ff,
+  purple: 0x800080,
+  bluedark: 0x0560c2,
+  lightblue: 0x3498db,
+  peachyellow: 0xf7d9aa
 };

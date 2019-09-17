@@ -174,7 +174,7 @@ function createPlanes() {
     const plane = new Plane();
     scene.add(plane.mesh);
     plane.mesh.position.x = getRandomInt(-75, 75);
-    plane.mesh.position.z = getRandomInt(0, -700);
+    plane.mesh.position.z = getRandomInt(-2000, -700);
 
     planes.push(plane);
   }
@@ -188,11 +188,11 @@ kd.RIGHT.down(function() {
   if (car.mesh.position.x < 75) car.mesh.position.x += 2;
 });
 
-function disp_health(h) {
+function dispHealth() {
   let score_str = `Score: ${score}<br>`;
 
-  for (let i = 0; i < h; i += 1) {
-    score_str += `<i class="fa fa-heart"></i> `;
+  for (let i = 0; i < health; i += 1) {
+    score_str += `<i class="fa fa-heart fa-lg"></i> `;
   }
 
   scoreDiv.innerHTML = score_str;
@@ -270,13 +270,45 @@ function loop() {
 
     if (plane.mesh.position.z > 200) {
       plane.mesh.position.x = getRandomInt(-75, 75);
-      plane.mesh.position.z = getRandomInt(-1500, -700);
+      plane.mesh.position.z = getRandomInt(-2000, -700);
+    }
+
+    // fire bomb
+    let close = Math.abs(plane.mesh.position.z - car.mesh.position.z) < 100;
+    let hit =
+      Math.abs(plane.bomb.mesh.position.y - car.mesh.position.y) > 610 &&
+      Math.abs(plane.mesh.position.x - car.mesh.position.x) < 20 &&
+      Math.abs(plane.mesh.position.z - car.mesh.position.z) < 30;
+
+    if (close && !plane.fired) {
+      plane.firing = true;
+    }
+    if (!close && !plane.firing) {
+      plane.fired = false;
+    }
+
+    if (plane.firing) {
+      plane.bomb.mesh.visible = true;
+      plane.bomb.mesh.position.y -= 7 * speed;
+      plane.fired = true;
+
+      if (hit && plane.bomb.mesh.visible) {
+        explosion.explode(plane);
+        plane.bomb.reset();
+        health -= 1;
+        plane.firing = false;
+      }
+    }
+
+    if (plane.bomb.mesh.position.y <= -710) {
+      plane.bomb.reset();
+      plane.firing = false;
     }
   });
 
   speed += 0.001;
 
-  disp_health(health);
+  dispHealth();
   car.update();
   explosion.logic();
   renderer.render(scene, camera);
@@ -294,7 +326,7 @@ function restart() {
   const parent = document.getElementById('gameOverDiv').parentElement;
   parent.removeChild(document.getElementById('gameOverDiv'));
 
-  disp_health(health);
+  dispHealth(health);
   loop();
 }
 
@@ -308,7 +340,7 @@ function gameOver() {
   gameOverDiv.innerHTML = `<p id='gameOverText'> GAME OVER WITH SCORE OF: ${score} </p> <button id='restart'> Press space to restart</button>`;
   document.body.appendChild(gameOverDiv);
 
-  disp_health(health);
+  dispHealth(health);
   cancelAnimationFrame(globalRenderID);
 }
 

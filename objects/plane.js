@@ -1,9 +1,11 @@
+import { Bomb } from './bomb.js';
 import { Colors } from './colors.js';
 import { Driver } from './driver.js';
 
 export class Plane {
   constructor() {
     this.mesh = new THREE.Object3D();
+    this.mesh.name = 'plane';
 
     // body
     let bodyGeom = new THREE.ConeGeometry(35, 80, 4, 1, 0);
@@ -31,7 +33,7 @@ export class Plane {
     engine.receiveShadow = true;
     this.mesh.add(engine);
 
-    // Create the wing
+    // wing
     let wingGeom = new THREE.BoxGeometry(40, 8, 150, 1, 1, 1);
     let wingMat = new THREE.MeshPhongMaterial({
       color: Colors.red,
@@ -52,13 +54,12 @@ export class Plane {
     this.axis.castShadow = true;
     this.axis.receiveShadow = true;
 
-    // blades
+    // blade
     let geomBlade = new THREE.BoxGeometry(1, 100, 20, 1, 1, 1);
     let matBlade = new THREE.MeshPhongMaterial({
       color: Colors.brownDark,
       flatShading: true
     });
-
     let blade = new THREE.Mesh(geomBlade, matBlade);
     blade.position.set(8, 0, 0);
     blade.castShadow = true;
@@ -67,9 +68,15 @@ export class Plane {
     this.axis.position.set(50, 0, 0);
     this.mesh.add(this.axis);
 
+    // pilot
     this.pilot = new Driver();
     this.pilot.mesh.position.set(-5, 25, 0);
     this.mesh.add(this.pilot.mesh);
+
+    // bomb
+    this.bomb = new Bomb();
+    this.bomb.reset();
+    this.mesh.add(this.bomb.mesh);
 
     this.mesh.castShadow = true;
     this.mesh.receiveShadow = true;
@@ -77,6 +84,9 @@ export class Plane {
     this.mesh.position.y = 180;
     this.mesh.rotation.y = -Math.PI / 2;
     this.mesh.scale.set(0.2, 0.2, 0.2);
+
+    this.firing = false;
+    this.fired = false;
   }
 
   update() {
