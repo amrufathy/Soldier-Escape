@@ -326,7 +326,7 @@ function restart() {
   const parent = document.getElementById('gameOverDiv').parentElement;
   parent.removeChild(document.getElementById('gameOverDiv'));
 
-  dispHealth(health);
+  dispHealth();
   loop();
 }
 
@@ -340,7 +340,7 @@ function gameOver() {
   gameOverDiv.innerHTML = `<p id='gameOverText'> GAME OVER WITH SCORE OF: ${score} </p> <button id='restart'> Press space to restart</button>`;
   document.body.appendChild(gameOverDiv);
 
-  dispHealth(health);
+  dispHealth();
   cancelAnimationFrame(globalRenderID);
 }
 
