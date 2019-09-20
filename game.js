@@ -61,7 +61,7 @@ function createScene() {
     1, // near plane
     1000 // far plane
   );
-  camera.position.set(0, 100, 200);
+  camera.position.set(0, 130, 210);
 
   renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
   renderer.setSize(WIDTH, HEIGHT);
@@ -377,7 +377,7 @@ function gameInstructions() {
   const instructionsDiv = document.createElement('div');
   instructionsDiv.id = 'instructionsDiv';
   instructionsDiv.innerHTML =
-    '<p id="instructionsText">How far can you go? <br/> Left/Right - Move <br/> Press "m" to un/mute sound</p><button id="start">Press space to start</button>';
+    '<p id="instructionsText">How far can you go? <br/> Left/Right - Move to dodge the trees and the bombs that the planes drop </br/></br/> Careful with your 5 lives! <br/><br/> Press "m" to un/mute sound</p><button id="start">Press space to start</button>';
 
   document.body.appendChild(instructionsDiv);
 }
