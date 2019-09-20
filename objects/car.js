@@ -6,16 +6,19 @@ export class Car {
     this.mesh = new THREE.Object3D();
     this.mesh.name = 'car';
 
-    // car body
+    // car frame
+    this.carframe = new THREE.Object3D();
+    
+    // frame main body
     let bodyGeom = new THREE.BoxGeometry(50, 30, 80, 1, 1, 1);
     let bodyMat = new THREE.MeshPhongMaterial({
       color: Colors.red,
       flatShading: true
     });
-    let body = new THREE.Mesh(bodyGeom, bodyMat);
-    body.castShadow = true;
-    body.receiveShadow = true;
-    this.mesh.add(body);
+    this.body = new THREE.Mesh(bodyGeom, bodyMat);
+    this.body.castShadow = true;
+    this.body.receiveShadow = true;
+    this.carframe.add(this.body);
 
     // tires
     let tireGeom = new THREE.CylinderGeometry(10, 10, 4);
@@ -26,18 +29,18 @@ export class Car {
     let tire = new THREE.Mesh(tireGeom, tireMat);
     tire.castShadow = true;
     tire.rotation.z = Math.PI / 2;
-    let tireFL = tire.clone();
-    tireFL.position.set(25, -18, 20);
-    this.mesh.add(tireFL);
-    let tireFR = tire.clone();
-    tireFR.position.set(-25, -18, 20);
-    this.mesh.add(tireFR);
-    let tireBL = tire.clone();
-    tireBL.position.set(25, -18, -20);
-    this.mesh.add(tireBL);
-    let tireBR = tire.clone();
-    tireBR.position.set(-25, -18, -20);
-    this.mesh.add(tireBR);
+    this.tireFL = tire.clone();
+    this.tireFL.position.set(25, -18, 20);
+    this.mesh.add(this.tireFL);
+    this.tireFR = tire.clone();
+    this.tireFR.position.set(-25, -18, 20);
+    this.mesh.add(this.tireFR);
+    this.tireBL = tire.clone();
+    this.tireBL.position.set(25, -18, -20);
+    this.mesh.add(this.tireBL);
+    this.tireBR = tire.clone();
+    this.tireBR.position.set(-25, -18, -20);
+    this.mesh.add(this.tireBR);
 
     // windshield
     let geomWindshield = new THREE.BoxGeometry(3, 20, 45, 1, 1, 1);
@@ -52,7 +55,7 @@ export class Car {
     windshield.rotation.y = Math.PI / 2;
     windshield.castShadow = true;
     windshield.receiveShadow = true;
-    this.mesh.add(windshield);
+    this.carframe.add(windshield);
 
     // bumper
     let bumperGeom = new THREE.BoxGeometry(55, 6, 6);
@@ -64,10 +67,10 @@ export class Car {
     bumper.receiveShadow = true;
     let frontBumper = bumper.clone();
     frontBumper.position.set(0, -14, 40);
-    this.mesh.add(frontBumper);
+    this.carframe.add(frontBumper);
     let backBumper = bumper.clone();
     backBumper.position.set(0, -14, -40);
-    this.mesh.add(backBumper);
+    this.carframe.add(backBumper);
 
     // number Plate
     let numberPlateGeom = new THREE.BoxGeometry(12, 10, 2);
@@ -77,7 +80,7 @@ export class Car {
     });
     let numberPlate = new THREE.Mesh(numberPlateGeom, numberPlateMat);
     numberPlate.receiveShadow = true;
-    this.mesh.add(numberPlate);
+    this.carframe.add(numberPlate);
     numberPlate.position.set(0, -5, -40);
 
     // tail lights
@@ -90,16 +93,18 @@ export class Car {
     lights.receiveShadow = true;
     let backLightsL = lights.clone();
     backLightsL.position.set(-20, 10, -40);
-    this.mesh.add(backLightsL);
+    this.carframe.add(backLightsL);
     let backLightsR = lights.clone();
     backLightsR.position.set(20, 10, -40);
-    this.mesh.add(backLightsR);
+    this.carframe.add(backLightsR);
 
     // driver
     this.driver = new Driver();
     this.driver.mesh.position.set(-10, 27, 10);
     this.driver.mesh.rotation.y = -Math.PI / 2;
-    this.mesh.add(this.driver.mesh);
+    this.carframe.add(this.driver.mesh);
+    this.mesh.add(this.carframe);
+    
 
     this.mesh.position.x = 0;
     this.mesh.position.y = 50;
@@ -111,7 +116,12 @@ export class Car {
 
   update() {
     this.level += 0.16;
-    this.mesh.position.y = 50 + Math.cos(this.level) * 0.25;
+    // this.mesh.position.y = 50 + Math.cos(this.level) * 1.25;
+    this.carframe.position.y = Math.cos(this.level) * 2.25;
+    this.tireFL.rotation.x += 0.1
+    this.tireFR.rotation.x += 0.1
+    this.tireBL.rotation.x += 0.1
+    this.tireBR.rotation.x += 0.1
     this.driver.updateHairs();
   }
 }
