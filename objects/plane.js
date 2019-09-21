@@ -15,6 +15,7 @@ export class Plane {
     });
 
     let body = new THREE.Mesh(bodyGeom, bodyMat);
+    body.name = 'plane body';
     body.castShadow = true;
     body.receiveShadow = true;
     body.rotation.x = Math.PI * 0.25;
@@ -28,6 +29,7 @@ export class Plane {
       flatShading: true
     });
     let engine = new THREE.Mesh(engineGeom, engineMat);
+    engine.name = 'engine';
     engine.position.x = 40;
     engine.castShadow = true;
     engine.receiveShadow = true;
@@ -40,6 +42,7 @@ export class Plane {
       flatShading: true
     });
     let wing = new THREE.Mesh(wingGeom, wingMat);
+    wing.name = 'wing';
     wing.castShadow = true;
     wing.receiveShadow = true;
     this.mesh.add(wing);
@@ -51,6 +54,7 @@ export class Plane {
       flatShading: true
     });
     this.axis = new THREE.Mesh(axisGeom, axisMat);
+    this.axis.name = 'axis';
     this.axis.castShadow = true;
     this.axis.receiveShadow = true;
 
@@ -61,6 +65,7 @@ export class Plane {
       flatShading: true
     });
     let blade = new THREE.Mesh(geomBlade, matBlade);
+    blade.name = 'blade';
     blade.position.set(8, 0, 0);
     blade.castShadow = true;
     blade.receiveShadow = true;

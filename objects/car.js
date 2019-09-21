@@ -71,12 +71,13 @@ export class Car {
       flatShading: true
     });
     let bumper = new THREE.Mesh(bumperGeom, bumperMat);
-    bumper.name = 'bumper';
     bumper.receiveShadow = true;
     let frontBumper = bumper.clone();
+    frontBumper.name = 'front bumper';
     frontBumper.position.set(0, -14, 40);
     this.carframe.add(frontBumper);
     let backBumper = bumper.clone();
+    backBumper.name = 'back bumper';
     backBumper.position.set(0, -14, -40);
     this.carframe.add(backBumper);
 
