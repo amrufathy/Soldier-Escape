@@ -30,7 +30,7 @@ export class Bomb {
 
     this.mesh.add(body);
 
-    this.mesh.scale.set(0.15, 0.15, 0.15);
+    this.mesh.scale.set(0.22, 0.22, 0.22);
     this.mesh.rotation.x = Math.PI;
   }
 

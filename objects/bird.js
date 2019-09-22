@@ -28,7 +28,7 @@ export class Bird {
 
     this.mesh.position.y = 300;
     this.mesh.rotation.y = Math.PI / 2;
-    this.mesh.scale.set(0.3, 0.3, 0.3);
+    this.mesh.scale.set(0.35, 0.35, 0.35);
   }
 
   flapWings() {
