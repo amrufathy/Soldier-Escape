@@ -61,7 +61,7 @@ body {
 }
 
 #gameOverText,
-#instructionsText {
+.instructionsText {
   text-align: center;
   font-family: 'Rubik Mono One', sans-serif;
   font-size: -webkit-xxx-large;
