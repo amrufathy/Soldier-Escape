@@ -5,45 +5,48 @@ export class Tree {
     this.mesh = new THREE.Object3D();
     this.mesh.name = 'tree';
 
+    // upper part
     this.sides = 13;
-    this.tiers = 9;
-    this.scalarMultiplier = Math.random() * (1.25 - 1.1) + 10.05;
-
-    this.geometry = new THREE.ConeGeometry(17.5, 41, this.sides, this.tiers);
-    this.material = new THREE.MeshStandardMaterial({
-      color: 0x33ff33,
-      shading: THREE.FlatShading,
+    let tiers = 10;
+    let scalarMultiplier = Math.random() * (1.25 - 1.1) + 10.05;
+    this.bushGeom = new THREE.ConeGeometry(17.5, 70, this.sides, tiers);
+    let bushMat = new THREE.MeshStandardMaterial({
+      color: Colors.treeGreen,
+      flatShading: true
     });
 
-    this.blowUpTree1(0, this.scalarMultiplier);
-    this.tightenTree1(1);
-    this.blowUpTree1(2, this.scalarMultiplier * 1.1, true);
-    this.tightenTree1(3);
-    this.blowUpTree1(4, this.scalarMultiplier * 1.2);
-    this.tightenTree1(5);
-    this.blowUpTree1(6, this.scalarMultiplier * 1.2);
-    this.tightenTree1(7);
+    this.blowUpTree(0, scalarMultiplier);
+    this.tightenTree(1);
+    this.blowUpTree(2, scalarMultiplier * 1.1, true);
+    this.tightenTree(3);
+    this.blowUpTree(4, scalarMultiplier * 1.2);
+    this.tightenTree(5);
+    this.blowUpTree(6, scalarMultiplier * 1.2);
+    this.tightenTree(7);
+    this.blowUpTree(8, scalarMultiplier * 1.2);
 
-    this.top = new THREE.Mesh(this.geometry, this.material);
-    this.top.castShadow = true;
-    this.top.receiveShadow = true;
-    this.top.position.y = 90;
-    this.top.rotation.y = Math.random() * Math.PI;
+    let bush = new THREE.Mesh(this.bushGeom, bushMat);
+    bush.castShadow = true;
+    bush.receiveShadow = true;
+    bush.position.y = 90;
+    bush.rotation.y = Math.random() * Math.PI;
 
-    this.trunkGeometry = new THREE.CylinderGeometry(
+    // trunk
+    let trunkGeom = new THREE.CylinderGeometry(
       Math.abs(Math.random() * 3) + 1,
       Math.abs(Math.random() * 5) + 3,
       100
     );
-    this.trunkMaterial = new THREE.MeshPhongMaterial({
+    let trunkMat = new THREE.MeshPhongMaterial({
       color: Colors.brown,
       flatShading: true
     });
-    this.trunk = new THREE.Mesh(this.trunkGeometry, this.trunkMaterial);
-    this.trunk.position.y = 35;
+    let trunk = new THREE.Mesh(trunkGeom, trunkMat);
+    trunk.castShadow = true;
+    trunk.position.y = 35;
 
-    this.mesh.add(this.trunk);
-    this.mesh.add(this.top);
+    this.mesh.add(trunk);
+    this.mesh.add(bush);
   }
 
   resetLocation(min, max) {
@@ -52,47 +55,49 @@ export class Tree {
     this.mesh.visible = true;
   }
 
-  tightenTree1(currentTier) {
+  tightenTree(currentTier) {
     let vertexIndex;
     let vertexVector = new THREE.Vector3();
-    const midPointVector = this.geometry.vertices[0].clone();
+    const midPointVector = this.bushGeom.vertices[0].clone();
     let offset;
     for (let i = 0; i < this.sides; i += 1) {
       vertexIndex = currentTier * this.sides + 1;
-      vertexVector = this.geometry.vertices[i + vertexIndex].clone();
+      vertexVector = this.bushGeom.vertices[i + vertexIndex].clone();
       midPointVector.y = vertexVector.y;
       offset = vertexVector.sub(midPointVector);
       offset.normalize().multiplyScalar(0.06);
-      this.geometry.vertices[i + vertexIndex].sub(offset);
+      this.bushGeom.vertices[i + vertexIndex].sub(offset);
     }
   }
 
-  blowUpTree1(currentTier, scalarMultiplier, odd) {
+  blowUpTree(currentTier, scalarMultiplier, odd) {
     let vertexIndex;
     let vertexVector = new THREE.Vector3();
-    const midPointVector = this.geometry.vertices[0].clone();
+    const midPointVector = this.bushGeom.vertices[0].clone();
     let offset;
     for (let i = 0; i < this.sides; i += 1) {
       vertexIndex = currentTier * this.sides + 1;
-      vertexVector = this.geometry.vertices[i + vertexIndex].clone();
+      vertexVector = this.bushGeom.vertices[i + vertexIndex].clone();
       midPointVector.y = vertexVector.y;
       offset = vertexVector.sub(midPointVector);
       if (odd) {
         if (i % 2 === 0) {
           offset.normalize().multiplyScalar(scalarMultiplier / 6);
-          this.geometry.vertices[i + vertexIndex].add(offset);
+          this.bushGeom.vertices[i + vertexIndex].add(offset);
         } else {
           offset.normalize().multiplyScalar(scalarMultiplier);
-          this.geometry.vertices[i + vertexIndex].add(offset);
-          this.geometry.vertices[i + vertexIndex].y = this.geometry.vertices[i + vertexIndex + this.sides].y + 0.05;
+          this.bushGeom.vertices[i + vertexIndex].add(offset);
+          this.bushGeom.vertices[i + vertexIndex].y =
+            this.bushGeom.vertices[i + vertexIndex + this.sides].y + 0.05;
         }
       } else if (i % 2 !== 0) {
         offset.normalize().multiplyScalar(scalarMultiplier / 6);
-        this.geometry.vertices[i + vertexIndex].add(offset);
+        this.bushGeom.vertices[i + vertexIndex].add(offset);
       } else {
         offset.normalize().multiplyScalar(scalarMultiplier);
-        this.geometry.vertices[i + vertexIndex].add(offset);
-        this.geometry.vertices[i + vertexIndex].y = this.geometry.vertices[i + vertexIndex + this.sides].y + 0.05;
+        this.bushGeom.vertices[i + vertexIndex].add(offset);
+        this.bushGeom.vertices[i + vertexIndex].y =
+          this.bushGeom.vertices[i + vertexIndex + this.sides].y + 0.05;
       }
     }
   }

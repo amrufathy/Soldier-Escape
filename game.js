@@ -123,7 +123,7 @@ function createGround() {
 function createTrees() {
   const limit = WIDTH / 4;
 
-  for (let i = 0; i < 20; i += 1) {
+  for (let i = 0; i < 15; i += 1) {
     const tree = new Tree();
     scene.add(tree.mesh);
     tree.mesh.position.x = getRandomInt(-limit, limit);
