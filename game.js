@@ -376,7 +376,15 @@ function handleKeyDown(keyEvent) {
 function gameInstructions() {
   const instructionsDiv = document.createElement('div');
   instructionsDiv.id = 'instructionsDiv';
-  instructionsDiv.innerHTML = '<p class="instructionsText">How far can you go? <br/> Left/Right - Move to dodge the trees and the bombs that the planes drop </br/></br/> Careful with your 5 lives! <br/><br/> Press "m" to un/mute sound</p><button id="start">Press space to start</button><br/><p class="instructionsText">Choose your character, press "1 > Car" or "2 > Plane"</p><div class="text-center"><img style="width:10vw;" src="assets/img/car.jpeg" hspace="20"/><img style="width:10vw;" src="assets/img/plane.jpeg"/></div>';
+  instructionsDiv.innerHTML =
+    '<p class="instructionsText">\
+    How far can you go? <br/>\
+    Left/Right - Move <br/> Dodge the trees and air bombs</br/> \
+    "m" - un/mute sound</p>\
+    <button id="start">Press space to start</button><br/>\
+    <p class="instructionsText">Choose your character <br/> \
+    Rress "1 > Car" or "2 > Plane"</p><div class="text-center">\
+    <img style="width:10vw;" src="assets/img/car.jpeg" hspace="20"/><img style="width:10vw;" src="assets/img/plane.jpeg"/></div>';
   document.body.appendChild(instructionsDiv);
 }
 
