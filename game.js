@@ -377,14 +377,8 @@ function gameInstructions() {
   const instructionsDiv = document.createElement('div');
   instructionsDiv.id = 'instructionsDiv';
   instructionsDiv.innerHTML =
-    '<p class="instructionsText">\
-    How far can you go? <br/>\
-    Left/Right - Move <br/> Dodge the trees and air bombs</br/> \
-    "m" - un/mute sound</p>\
-    <button id="start">Press space to start</button><br/>\
-    <p class="instructionsText">Choose your character <br/> \
-    Rress "1 > Car" or "2 > Plane"</p><div class="text-center">\
-    <img style="width:10vw;" src="assets/img/car.jpeg" hspace="20"/><img style="width:10vw;" src="assets/img/plane.jpeg"/></div>';
+    '<p id="instructionsText">How far can you go? <br/> Left/Right - Move <br/> Dodge the trees and air bombs <br/> "m" - un/mute sound</p><button id="start">Press space to start</button>';
+
   document.body.appendChild(instructionsDiv);
 }
 
